@@ -101,3 +101,42 @@ TEST_CASE("Dynamic array's clear() works properly") {
     REQUIRE_THROWS_AS(arr.at(i), std::out_of_range);
   }
 }
+
+TEST_CASE("Comparators of dynamic arrays work correctly") {
+  DynamicArray arr;
+  for (int i = 0; i < 155; i++) {
+    arr.push_back(69.0);
+  }
+
+  DynamicArray arr1;
+  for (int i = 0; i < 155; i++) {
+    arr1.push_back(69.0);
+  }
+
+  REQUIRE(arr1 == arr);
+
+  DynamicArray arr2;
+  for (int i = 0; i < 155; i++) {
+    arr.push_back(static_cast<double>(i));
+  }
+
+  REQUIRE(arr2 != arr);
+}
+
+TEST_CASE(
+    "Dynamic array's copy constructor and operator equals work properly") {
+  DynamicArray arr;
+  for (int i = 0; i < 155; i++) {
+    arr.push_back(69.0);
+  }
+
+  DynamicArray arr_copy{arr};
+  REQUIRE(arr_copy.data() != arr.data());
+  REQUIRE(arr_copy == arr);
+
+  DynamicArray arr_equals;
+  arr_equals = arr;
+  REQUIRE(arr_equals.data() != arr.data());
+  REQUIRE(arr_equals.data() != arr_copy.data());
+  REQUIRE(arr_equals == arr);
+}

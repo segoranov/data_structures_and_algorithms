@@ -12,6 +12,32 @@ DynamicArray::DynamicArray(size_t initialSize) {
   m_currentCapacity = initialSize;
 }
 
+DynamicArray::DynamicArray(const DynamicArray &other) {
+  m_arr = new double[other.m_currentCapacity];
+  for (int i = 0; i < other.m_currentSize; i++) {
+    m_arr[i] = other.m_arr[i];
+  }
+
+  m_currentSize = other.m_currentSize;
+  m_currentCapacity = other.m_currentCapacity;
+}
+
+DynamicArray &DynamicArray::operator=(const DynamicArray &other) {
+  if (this != &other) {
+    double *new_arr = new double[other.m_currentCapacity];
+    for (int i = 0; i < other.m_currentSize; i++) {
+      new_arr[i] = other.m_arr[i];
+    }
+
+    delete[] m_arr;
+    m_arr = new_arr;
+    m_currentSize = other.m_currentSize;
+    m_currentCapacity = other.m_currentCapacity;
+  }
+
+  return *this;
+}
+
 void DynamicArray::push_back(double value) {
   // 1st case: Buffer has no capacity yet
   if (m_currentCapacity == 0) {
@@ -66,6 +92,28 @@ double &DynamicArray::at(size_t index) {
 
 double &DynamicArray::operator[](size_t index) { return m_arr[index]; }
 
+const double &DynamicArray::operator[](size_t index) const {
+  return m_arr[index];
+}
+
 double *DynamicArray::data() noexcept { return m_arr; }
 
 DynamicArray::~DynamicArray() { delete[] m_arr; }
+
+bool operator==(const DynamicArray &lhs, const DynamicArray &rhs) {
+  if (lhs.size() != rhs.size()) {
+    return false;
+  }
+
+  for (int i = 0; i < lhs.size(); i++) {
+    if (lhs[i] != rhs[i]) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+bool operator!=(const DynamicArray &lhs, const DynamicArray &rhs) {
+  return !(lhs == rhs);
+}

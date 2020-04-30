@@ -25,6 +25,7 @@ public:
    * Access element without checking if index is out of bounds
    */
   double &operator[](size_t index);
+  const double& operator[](size_t index) const;
 
   /**
    * Returns number of elements in the array
@@ -61,5 +62,8 @@ private:
   size_t m_currentSize = 0;
   size_t m_currentCapacity = 0;
 };
+
+bool operator==(const DynamicArray& lhs, const DynamicArray& rhs);
+bool operator!=(const DynamicArray& lhs, const DynamicArray& rhs);
 
 #endif
