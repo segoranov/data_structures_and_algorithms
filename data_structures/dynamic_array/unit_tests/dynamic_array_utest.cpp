@@ -15,3 +15,53 @@ TEST_CASE("Dynamic array has correct size when using size constructor") {
   REQUIRE(arr.capacity() >= 23);
   REQUIRE(arr.size() == 23);
 }
+
+TEST_CASE("Dynamic array resizes itself properly when adding new elements") {
+  DynamicArray arr;
+
+  arr.push_back(3.0);
+
+  REQUIRE(!arr.empty());
+  REQUIRE(arr.capacity() == 1);
+  REQUIRE(arr.size() == 1);
+
+  arr.push_back(5.0);
+  REQUIRE(!arr.empty());
+  REQUIRE(arr.capacity() == 2);
+  REQUIRE(arr.size() == 2);
+
+  arr.push_back(7.0);
+  REQUIRE(!arr.empty());
+  REQUIRE(arr.capacity() == 4);
+  REQUIRE(arr.size() == 3);
+
+  arr.push_back(9.0);
+  REQUIRE(!arr.empty());
+  REQUIRE(arr.capacity() == 4);
+  REQUIRE(arr.size() == 4);
+
+  arr.push_back(11.0);
+  REQUIRE(!arr.empty());
+  REQUIRE(arr.capacity() == 8);
+  REQUIRE(arr.size() == 5);
+}
+
+TEST_CASE("Dynamic array's element access functions work correctly") {
+  DynamicArray arr;
+
+  double val = 1.0;
+  for (int i = 0; i < 30; i++) {
+    arr.push_back(val);
+    val += 1;
+  }
+
+  REQUIRE(arr.size() == 30);
+  REQUIRE(arr.capacity() == 32);
+
+  val = 1.0;
+  for (int i = 0; i < arr.size(); i++) {
+    REQUIRE(arr[i] == val);
+    REQUIRE(arr.at(i) == val);
+    val += 1.0;
+  }
+}
