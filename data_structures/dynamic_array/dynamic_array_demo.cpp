@@ -47,5 +47,8 @@ int main() {
   print(arr);
   std::cout << "Array capacity: " << arr.capacity() << '\n';
 
+  arr.shrink_to_fit();
+  std::cout << "Array capacity: " << arr.capacity() << '\n';
+
   return 0;
 }
