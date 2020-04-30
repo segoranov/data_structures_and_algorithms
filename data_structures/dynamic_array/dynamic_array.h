@@ -6,7 +6,7 @@
 
 class DynamicArray {
 public:
-  DynamicArray();
+  DynamicArray() = default;
   DynamicArray(size_t initialSize);
   DynamicArray(const DynamicArray &);
   DynamicArray &operator=(const DynamicArray &);
@@ -49,10 +49,16 @@ public:
    */
   void clear() const;
 
+  /**
+   * Returns a direct pointer to the memory array used internally by the dynamic
+   * array to store its owned elements.
+   */
+  double *data() noexcept;
+
 private:
-  double *m_arr;
-  size_t m_currentSize;
-  size_t m_currentCapacity;
+  double *m_arr = nullptr;
+  size_t m_currentSize = 0;
+  size_t m_currentCapacity = 0;
 };
 
 #endif
