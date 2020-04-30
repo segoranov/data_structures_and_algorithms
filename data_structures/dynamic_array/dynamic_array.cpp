@@ -54,6 +54,8 @@ size_t DynamicArray::capacity() const { return m_currentCapacity; }
 
 bool DynamicArray::empty() const { return m_currentSize == 0; }
 
+void DynamicArray::clear() { m_currentSize = 0; }
+
 double &DynamicArray::at(size_t index) {
   if (index < 0 || index >= m_currentSize) {
     throw std::out_of_range{"Index out of range."};

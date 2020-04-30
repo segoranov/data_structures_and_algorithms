@@ -79,3 +79,25 @@ TEST_CASE("Dynamic array's element access function at() throws exception when "
 
   REQUIRE_THROWS_AS(arr.at(155), std::out_of_range);
 }
+
+TEST_CASE("Dynamic array's clear() works properly") {
+  DynamicArray arr;
+  for (int i = 0; i < 155; i++) {
+    arr.push_back(69.0);
+  }
+
+  REQUIRE(arr.size() == 155);
+  auto capacity = arr.capacity();
+
+  arr.clear();
+
+  // array should be empty; size should be 0; capacity should be as before
+  REQUIRE(arr.empty());
+  REQUIRE(arr.size() == 0);
+  REQUIRE(arr.capacity() == capacity);
+
+  // should not be able to access any element
+  for (int i = -300; i < 300; i++) {
+    REQUIRE_THROWS_AS(arr.at(i), std::out_of_range);
+  }
+}

@@ -48,7 +48,7 @@ public:
    * After calling it, size() will return 0, but capacity() will remain
    * the same as before calling it
    */
-  void clear() const;
+  void clear();
 
   /**
    * Returns a direct pointer to the memory array used internally by the dynamic
