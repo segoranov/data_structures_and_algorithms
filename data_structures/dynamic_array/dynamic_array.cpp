@@ -2,6 +2,12 @@
 
 DynamicArray::DynamicArray(size_t initialSize) {
   m_arr = new double[initialSize];
+
+  // initialize all values with zero
+  for (int i = 0; i < initialSize; i++) {
+    m_arr = 0;
+  }
+
   m_currentSize = initialSize;
   m_currentCapacity = initialSize;
 }
