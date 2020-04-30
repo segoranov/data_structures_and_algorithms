@@ -49,6 +49,11 @@ public:
   size_t capacity() const;
 
   /**
+   * Requests the container to reduce its capacity to fit its size.
+   */
+  void shrink_to_fit();
+
+  /**
    * Returns whether the array is empty of elements or not
    */
   bool empty() const;

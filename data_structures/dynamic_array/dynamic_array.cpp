@@ -86,6 +86,31 @@ size_t DynamicArray::size() const { return m_currentSize; }
 
 size_t DynamicArray::capacity() const { return m_currentCapacity; }
 
+void DynamicArray::shrink_to_fit() {
+  if (m_currentSize == m_currentCapacity) {
+    return;
+  }
+
+  if (m_currentSize == 0 && m_currentCapacity > 0) {
+    delete[] m_arr;
+    m_arr = nullptr;
+    m_currentCapacity = 0;
+    return;
+  }
+
+  // at this point we know that m_currentSize < m_currentCapacity
+
+  double *newArr = new double[m_currentSize];
+  m_currentCapacity = m_currentSize;
+
+  for (int i = 0; i < m_currentSize; i++) {
+    newArr[i] = m_arr[i];
+  }
+
+  delete[] m_arr;
+  m_arr = newArr;
+}
+
 bool DynamicArray::empty() const { return m_currentSize == 0; }
 
 void DynamicArray::clear() { m_currentSize = 0; }

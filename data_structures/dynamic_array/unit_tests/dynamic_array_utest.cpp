@@ -158,3 +158,40 @@ TEST_CASE("Pop back works correctly") {
   // container should be empty now
   REQUIRE_THROWS_AS(arr.pop_back(), std::runtime_error);
 }
+
+TEST_CASE("shrink_to_fit works correctly") {
+  DynamicArray arr{200};
+  REQUIRE(arr.size() == 200);
+  REQUIRE(arr.capacity() == 200);
+
+  for (int i = 0; i < 150; i++) {
+    arr.pop_back();
+  }
+
+  REQUIRE(arr.size() == 50);
+  REQUIRE(arr.capacity() == 200);
+
+  arr.shrink_to_fit();
+  REQUIRE(arr.capacity() == 50);
+
+  for (int i = 0; i < 50; i++) {
+    arr.pop_back();
+  }
+
+  REQUIRE(arr.empty());
+  REQUIRE(arr.capacity() == 50);
+
+  arr.shrink_to_fit();
+  REQUIRE(arr.capacity() == 0);
+  REQUIRE(!arr.data());
+
+  // push new elements to make sure array works OK after above operations
+  arr.push_back(5.0);
+  arr.push_back(5.0);
+  arr.push_back(5.0);
+  arr.push_back(5.0);
+  arr.push_back(5.0);
+  REQUIRE(arr.capacity() == 8);
+  REQUIRE(arr.size() == 5);
+  REQUIRE(arr.data());
+}
