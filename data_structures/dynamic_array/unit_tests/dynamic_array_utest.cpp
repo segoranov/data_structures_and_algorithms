@@ -14,6 +14,7 @@ TEST_CASE("Dynamic array has correct size when using size constructor") {
   REQUIRE(!arr.empty());
   REQUIRE(arr.capacity() >= 23);
   REQUIRE(arr.size() == 23);
+  REQUIRE(arr.data());
 }
 
 TEST_CASE("Dynamic array resizes itself properly when adding new elements") {
