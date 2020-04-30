@@ -65,3 +65,17 @@ TEST_CASE("Dynamic array's element access functions work correctly") {
     val += 1.0;
   }
 }
+
+TEST_CASE("Dynamic array's element access function at() throws exception when "
+          "index is out of bounds") {
+  DynamicArray arr;
+  for (int i = 0; i < 155; i++) {
+    arr.push_back(69.0);
+  }
+
+  for (int i = 0; i < 155; i++) {
+    REQUIRE_NOTHROW(arr.at(i));
+  }
+
+  REQUIRE_THROWS_AS(arr.at(155), std::out_of_range);
+}
