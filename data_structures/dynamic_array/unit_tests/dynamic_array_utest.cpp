@@ -140,3 +140,20 @@ TEST_CASE(
   REQUIRE(arr_equals.data() != arr_copy.data());
   REQUIRE(arr_equals == arr);
 }
+
+TEST_CASE("Pop back works correctly") {
+  DynamicArray arr;
+  for (int i = 0; i < 155; i++) {
+    arr.push_back(69.0);
+  }
+
+  REQUIRE(arr.size() == 155);
+
+  for (int i = 155; i > 0; i--) {
+    REQUIRE(arr.size() == i);
+    arr.pop_back();
+  }
+
+  // container should be empty now
+  REQUIRE_THROWS_AS(arr.pop_back(), std::runtime_error);
+}

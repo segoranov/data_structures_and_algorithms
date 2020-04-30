@@ -74,6 +74,14 @@ void DynamicArray::push_back(double value) {
   m_currentCapacity = newCapacity;
 }
 
+void DynamicArray::pop_back() {
+  if (empty()) {
+    throw std::runtime_error("Calling pop_back() on an empty container.");
+  }
+
+  --m_currentSize;
+}
+
 size_t DynamicArray::size() const { return m_currentSize; }
 
 size_t DynamicArray::capacity() const { return m_currentCapacity; }

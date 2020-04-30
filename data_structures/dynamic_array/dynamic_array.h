@@ -12,7 +12,16 @@ public:
   DynamicArray &operator=(const DynamicArray &);
   ~DynamicArray();
 
+  /**
+   * Appends the given element value to the end of the container.
+   */
   void push_back(double value);
+
+  /**
+   * Removes the last element of the container.
+   * Calling pop_back on an empty container throws exception.
+   * @throw std::runtime_error
+   */
   void pop_back();
 
   /**
@@ -25,7 +34,7 @@ public:
    * Access element without checking if index is out of bounds
    */
   double &operator[](size_t index);
-  const double& operator[](size_t index) const;
+  const double &operator[](size_t index) const;
 
   /**
    * Returns number of elements in the array
@@ -63,7 +72,7 @@ private:
   size_t m_currentCapacity = 0;
 };
 
-bool operator==(const DynamicArray& lhs, const DynamicArray& rhs);
-bool operator!=(const DynamicArray& lhs, const DynamicArray& rhs);
+bool operator==(const DynamicArray &lhs, const DynamicArray &rhs);
+bool operator!=(const DynamicArray &lhs, const DynamicArray &rhs);
 
 #endif
