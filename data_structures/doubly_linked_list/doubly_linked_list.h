@@ -117,6 +117,20 @@ private:
   size_t currentSize = 0;
 };
 
+template <typename T> void DoublyLinkedList<T>::push_back(const T &value) {
+  Node<T> *node = new Node{value};
+  ++currentSize;
+
+  if (!head) {
+    head = tail = node;
+    return;
+  }
+
+  // we have at least 1 element
+  tail->next = node;
+  tail = node;
+}
+
 template <typename T> DoublyLinkedList<T>::~DoublyLinkedList() {
   while (head) {
     Node<T> *nextHead = head->next;

@@ -7,3 +7,24 @@ TEST_CASE(
   REQUIRE(list.empty());
   REQUIRE(list.size() == 0);
 }
+
+TEST_CASE("Push back one element") {
+  DoublyLinkedList<int> list;
+  list.push_back(1);
+  REQUIRE(list.back() == 1);
+  REQUIRE(!list.empty());
+  REQUIRE(list.size() == 1);
+}
+
+TEST_CASE("Push back many elements") {
+  DoublyLinkedList<int> list;
+  for (int i = 1; i <= 1000; i++) {
+    list.push_back(i);
+    REQUIRE(list.size() == i);
+    REQUIRE(list.back() == i);
+  }
+
+  list.back() = 3999;
+  REQUIRE(list.back() == 3999);
+  REQUIRE(list.size() == 1000);
+}
