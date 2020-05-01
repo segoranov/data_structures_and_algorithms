@@ -2,6 +2,7 @@
 #define DOUBLY_LINKED_LIST_H
 
 #include <cstddef>
+#include <stdexcept>
 
 template <typename T> struct Node {
   Node *previous;
@@ -130,6 +131,23 @@ template <typename T> void DoublyLinkedList<T>::push_back(const T &value) {
   tail->next = node;
   node->previous = tail;
   tail = node;
+}
+
+template <typename T> void DoublyLinkedList<T>::pop_back() {
+  if (empty()) {
+    throw std::runtime_error{"Calling pop_back() on an empty list."};
+  }
+
+  --currentSize;
+
+  if (currentSize == 0) { // there was only 1 element in the list
+    delete tail;
+    head = tail = nullptr;
+  } else { // there were at least 2 elements in the list
+    tail = tail->previous;
+    delete tail->next;
+    tail->next = nullptr;
+  }
 }
 
 template <typename T> DoublyLinkedList<T>::~DoublyLinkedList() {
