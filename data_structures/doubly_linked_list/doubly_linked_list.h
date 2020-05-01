@@ -18,8 +18,11 @@ template <typename T> class DoublyLinkedListIterator;
 template <typename T> class DoublyLinkedList {
 public:
   DoublyLinkedList() = default;
-  DoublyLinkedList(const DoublyLinkedList &);
-  DoublyLinkedList &operator=(const DoublyLinkedList &);
+
+  // TODO when const_iterator is implemented
+  DoublyLinkedList(const DoublyLinkedList &other);
+  DoublyLinkedList &operator=(const DoublyLinkedList &other);
+
   ~DoublyLinkedList(); // O(n)
 
   /**
@@ -76,6 +79,8 @@ public:
    *
    * @return Iterator following the last removed element.
    * If pos refers to the last element, then invalid iterator is returned
+   *
+   * @note The parameter 'pos' becomes invalid iterator after the erasion
    */
   DoublyLinkedListIterator<T> erase(DoublyLinkedListIterator<T> pos);
 
@@ -175,7 +180,41 @@ public:
 
 private:
   Node<T> *m_pCurrentNode;
+  friend class DoublyLinkedList<T>;
 };
+
+// template <typename T>
+// DoublyLinkedList<T>::DoublyLinkedList(const DoublyLinkedList &other) {
+//   if (!other.empty()) {
+//     auto it = other.begin();
+//     for (; it != other.end(); it++) {
+//       push_back(*it);
+//     }
+
+//     // push last element
+//     push_back(*it);
+//   }
+// }
+
+// template <typename T>
+// DoublyLinkedList<T> &DoublyLinkedList<T>::operator=(const DoublyLinkedList
+// &other) {
+//   if (this != &other) {
+//     clear();
+
+//     if (!other.empty()) {
+//       auto it = other.begin();
+//       for (; it != other.end(); it++) {
+//         push_back(*it);
+//       }
+
+//       // push last element
+//       push_back(*it);
+//     }
+//   }
+
+//   return *this;
+// }
 
 template <typename T> void DoublyLinkedList<T>::push_front(const T &value) {
   Node<T> *node = new Node{value};
@@ -241,13 +280,7 @@ template <typename T> void DoublyLinkedList<T>::pop_back() {
   }
 }
 
-template <typename T> DoublyLinkedList<T>::~DoublyLinkedList() {
-  while (head) {
-    Node<T> *nextHead = head->next;
-    delete head;
-    head = nextHead;
-  }
-}
+template <typename T> DoublyLinkedList<T>::~DoublyLinkedList() { clear(); }
 
 template <typename T>
 DoublyLinkedListIterator<T> DoublyLinkedList<T>::begin() noexcept {
@@ -262,13 +295,41 @@ DoublyLinkedListIterator<T> DoublyLinkedList<T>::end() noexcept {
 template <typename T>
 DoublyLinkedListIterator<T>
 DoublyLinkedList<T>::insert(DoublyLinkedListIterator<T> pos, const T &value) {
-  // TODO
+  if (pos == begin()) {
+    push_front(value);
+    return begin();
+  }
+
+  Node<T> *node = new Node{value};
+  ++currentSize;
+
+  node->next = pos.m_pCurrentNode;
+  node->previous = pos.m_pCurrentNode->previous;
+  pos.m_pCurrentNode->previous->next = node;
+  pos.m_pCurrentNode->previous = node;
+
+  return DoublyLinkedListIterator<T>{node};
 }
 
 template <typename T>
 DoublyLinkedListIterator<T>
 DoublyLinkedList<T>::erase(DoublyLinkedListIterator<T> pos) {
-  // TODO
+  if (pos == begin()) {
+    pop_front();
+    return begin();
+  }
+
+  if (pos == end()) {
+    pop_back();
+    return end();
+  }
+
+  --currentSize;
+  pos.m_pCurrentNode->previous->next = pos.m_pCurrentNode->next;
+  pos.m_pCurrentNode->next->previous = pos.m_pCurrentNode->previous;
+  auto next = DoublyLinkedListIterator<T>{pos.m_pCurrentNode->next};
+  delete pos.m_pCurrentNode;
+  return next;
 }
 
 template <typename T> T &DoublyLinkedList<T>::front() { return head->data; }
@@ -297,12 +358,31 @@ template <typename T> void DoublyLinkedList<T>::clear() {
   }
 }
 
-template <typename T>
-bool operator==(const DoublyLinkedList<T> &lhs,
-                const DoublyLinkedList<T> &rhs) {}
+// TODO when const_iterator is implemented
+// template <typename T>
+// bool operator==(const DoublyLinkedList<T> &lhs,
+//                 const DoublyLinkedList<T> &rhs) {
+//   if (!lhs.size() == rhs.size()) {
+//     return false;
+//   }
 
-template <typename T>
-bool operator!=(const DoublyLinkedList<T> &lhs,
-                const DoublyLinkedList<T> &rhs) {}
+//   auto itLhs = lhs.begin();
+//   auto itRhs = rhs.begin();
+
+//   for (; itLhs != lhs.end(); ++itLhs, ++itRhs) {
+//     if (*itLhs != *itRhs) {
+//       return false;
+//     }
+//   }
+
+//   // compare last elements
+//   return *itLhs != *itRhs;
+// }
+
+// template <typename T>
+// bool operator!=(const DoublyLinkedList<T> &lhs,
+//                 const DoublyLinkedList<T> &rhs) {
+//   return !(lhs == rhs);
+// }
 
 #endif

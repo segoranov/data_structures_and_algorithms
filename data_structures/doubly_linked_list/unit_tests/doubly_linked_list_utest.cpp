@@ -135,3 +135,132 @@ TEST_CASE("Push a lot of elements test iterators") {
   *old = 6969;
   REQUIRE(*list.begin() == 6969);
 }
+
+TEST_CASE("Test inserting one element in the beginning") {
+  DoublyLinkedList<int> list;
+  list.push_front(1);
+
+  auto it = list.begin();
+  auto insertedIt = list.insert(it, 2);
+
+  REQUIRE(*it == 1);
+  REQUIRE(*insertedIt == 2);
+
+  REQUIRE(it == list.end());
+  REQUIRE(insertedIt == list.begin());
+}
+
+TEST_CASE("Test inserting many elements") {
+  DoublyLinkedList<int> list;
+
+  // add even numbers
+  for (int i = 2; i <= 100; i += 2) {
+    list.push_back(i);
+  }
+
+  REQUIRE(list.size() == 50);
+
+  // now add the needed odd numbers inbetween the even numbers
+  auto it = list.begin();
+  ++it; // it points to 4
+
+  for (int i = 3; i <= 99; i += 2) {
+    list.insert(it, i);
+    ++it;
+  }
+
+  it = list.begin();
+  for (int i = 2; i <= 100; i++) {
+    REQUIRE(*it == i);
+    ++it;
+  }
+}
+
+TEST_CASE("Erase at beginning") {
+  DoublyLinkedList<int> list;
+  list.push_back(5);
+  list.push_back(6);
+  list.push_back(7);
+  list.erase(list.begin());
+
+  auto it = list.begin();
+  REQUIRE(*it == 6);
+  ++it;
+  REQUIRE(*it == 7);
+}
+
+TEST_CASE("Erase at end") {
+  DoublyLinkedList<int> list;
+  list.push_back(5);
+  list.push_back(6);
+  list.push_back(7);
+  list.erase(list.end());
+
+  auto it = list.end();
+  REQUIRE(*it == 6);
+  --it;
+  REQUIRE(*it == 5);
+}
+
+TEST_CASE("Erase at middle") {
+  DoublyLinkedList<int> list;
+  list.push_back(5);
+  list.push_back(6);
+  list.push_back(7);
+  auto it = list.begin();
+  ++it; // points at 6
+  auto afterErasedIt = list.erase(it);
+  REQUIRE(!it);
+  REQUIRE(*afterErasedIt == 7);
+  afterErasedIt--;
+  REQUIRE(*afterErasedIt == 5);
+  REQUIRE(list.size() == 2);
+}
+
+TEST_CASE("Erase many numbers") {
+  DoublyLinkedList<int> list;
+  for (int i = 1; i <= 100; i++) {
+    list.push_back(i);
+  }
+
+  REQUIRE(list.size() == 100);
+
+  // Now erase all even numbers
+  auto it = list.begin();
+  ++it; // points at 2
+
+  for (int i = 3; i <= 100; i += 2) {
+    it = list.erase(it);
+    REQUIRE(*it == i);
+    ++it; // make it point to the next even number
+  }
+
+  it = list.begin();
+  for (int i = 1; i <= 100; i += 2) {
+    REQUIRE(*it == i);
+    ++it;
+  }
+
+  REQUIRE(list.size() == 51);
+}
+
+// TODO when const_iterator is implemented
+// TEST_CASE("Comparator of linked lists works correctly") {
+//   DoublyLinkedList<int> l1, l2;
+
+//   for (int i = 0; i < 30'000; i++) {
+//     l1.push_back(i);
+//     l2.push_back(i);
+//   }
+
+//   REQUIRE(l1 == l2);
+//   l1.push_back(69);
+//   REQUIRE(l1 != l2);
+
+//   auto l3{l1};
+//   REQUIRE(l3 == l1);
+
+//   DoublyLinkedList<int> l4;
+//   l4 = l2;
+//   REQUIRE(l4 == l2);
+// }
