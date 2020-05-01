@@ -1,7 +1,8 @@
 ## Implementation of various data structures and algorithms
 
 ### Data structures
-- [Dynamic array](https://github.com/stiliangoranov/data_structures_and_algorithms/tree/master/data_structures/dynamic_array)
+- [Dynamic array - non template](https://github.com/stiliangoranov/data_structures_and_algorithms/tree/master/data_structures/dynamic_array_non_template)
+- [Dynamic array - template](https://github.com/stiliangoranov/data_structures_and_algorithms/tree/master/data_structures/dynamic_array_template)
 - [Stack](https://github.com/stiliangoranov/data_structures_and_algorithms/tree/master/data_structures/stack)
 
 ### Algorithms
