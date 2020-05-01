@@ -2,7 +2,7 @@
 
 ### Data structures
 - [Dynamic array](https://github.com/stiliangoranov/data_structures_and_algorithms/tree/master/data_structures/dynamic_array)
-
+- [Stack](https://github.com/stiliangoranov/data_structures_and_algorithms/tree/master/data_structures/stack)
 
 ### Algorithms
 - [Sorting algorithms](https://github.com/stiliangoranov/data_structures_and_algorithms/tree/master/sorting_algorithms)
