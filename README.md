@@ -4,6 +4,7 @@
 - [Dynamic array - non template](https://github.com/stiliangoranov/data_structures_and_algorithms/tree/master/data_structures/dynamic_array_non_template)
 - [Dynamic array - template](https://github.com/stiliangoranov/data_structures_and_algorithms/tree/master/data_structures/dynamic_array_template)
 - [Stack](https://github.com/stiliangoranov/data_structures_and_algorithms/tree/master/data_structures/stack)
+- [Doubly linked list](https://github.com/stiliangoranov/data_structures_and_algorithms/tree/master/data_structures/doubly_linked_list)
 
 ### Algorithms
 - [Sorting algorithms](https://github.com/stiliangoranov/data_structures_and_algorithms/tree/master/sorting_algorithms)
