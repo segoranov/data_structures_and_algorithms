@@ -54,12 +54,12 @@ public:
   void pop_front();
 
   /**
-   * @return an iterator to the beginning
+   * @return an iterator to the first element
    */
   DoublyLinkedListIterator<T> begin() noexcept;
 
   /**
-   * @return an iterator to the end
+   * @return an iterator to the end element
    */
   DoublyLinkedListIterator<T> end() noexcept;
 
@@ -75,7 +75,7 @@ public:
    * Removes the element at pos.
    *
    * @return Iterator following the last removed element.
-   * If pos refers to the last element, then the end() iterator is returned.
+   * If pos refers to the last element, then invalid iterator is returned
    */
   DoublyLinkedListIterator<T> erase(DoublyLinkedListIterator<T> pos);
 
@@ -116,6 +116,65 @@ private:
   Node<T> *head = nullptr;
   Node<T> *tail = nullptr;
   size_t currentSize = 0;
+};
+
+template <typename T> class DoublyLinkedListIterator {
+public:
+  explicit DoublyLinkedListIterator(Node<T> *pCurrentNode = nullptr)
+      : m_pCurrentNode{pCurrentNode} {}
+
+  // Prefix ++ overload
+  DoublyLinkedListIterator &operator++() {
+    if (m_pCurrentNode->next) {
+      m_pCurrentNode = m_pCurrentNode->next;
+    }
+
+    return *this;
+  }
+
+  // Postfix ++ overload
+  DoublyLinkedListIterator operator++(int) {
+    DoublyLinkedListIterator old = *this;
+    ++*this;
+    return old;
+  }
+
+  // Prefix -- overload
+  DoublyLinkedListIterator &operator--() {
+    if (m_pCurrentNode->previous) {
+      m_pCurrentNode = m_pCurrentNode->previous;
+    }
+
+    return *this;
+  }
+
+  // Postfix -- overload
+  DoublyLinkedListIterator operator--(int) {
+    DoublyLinkedListIterator old = *this;
+    --*this;
+    return old;
+  }
+
+  bool isValid() const { return m_pCurrentNode; }
+  bool operator!() const { return isValid(); }
+
+  T &operator*() { return m_pCurrentNode->data; }
+
+  T *operator->() { return &m_pCurrentNode->data; }
+
+  friend bool operator==(const DoublyLinkedListIterator<T> &lhs,
+                         const DoublyLinkedListIterator<T> &rhs) {
+
+    return lhs.m_pCurrentNode == rhs.m_pCurrentNode;
+  }
+
+  friend bool operator!=(const DoublyLinkedListIterator<T> &lhs,
+                         const DoublyLinkedListIterator<T> &rhs) {
+    return !(lhs == rhs);
+  }
+
+private:
+  Node<T> *m_pCurrentNode;
 };
 
 template <typename T> void DoublyLinkedList<T>::push_front(const T &value) {
@@ -190,6 +249,28 @@ template <typename T> DoublyLinkedList<T>::~DoublyLinkedList() {
   }
 }
 
+template <typename T>
+DoublyLinkedListIterator<T> DoublyLinkedList<T>::begin() noexcept {
+  return DoublyLinkedListIterator<T>{head};
+}
+
+template <typename T>
+DoublyLinkedListIterator<T> DoublyLinkedList<T>::end() noexcept {
+  return DoublyLinkedListIterator<T>{tail};
+}
+
+template <typename T>
+DoublyLinkedListIterator<T>
+DoublyLinkedList<T>::insert(DoublyLinkedListIterator<T> pos, const T &value) {
+  // TODO
+}
+
+template <typename T>
+DoublyLinkedListIterator<T>
+DoublyLinkedList<T>::erase(DoublyLinkedListIterator<T> pos) {
+  // TODO
+}
+
 template <typename T> T &DoublyLinkedList<T>::front() { return head->data; }
 
 template <typename T> const T &DoublyLinkedList<T>::front() const {
@@ -215,8 +296,6 @@ template <typename T> void DoublyLinkedList<T>::clear() {
     pop_back();
   }
 }
-
-template <typename T> class DoublyLinkedListIterator {};
 
 template <typename T>
 bool operator==(const DoublyLinkedList<T> &lhs,
