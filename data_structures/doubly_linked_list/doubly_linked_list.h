@@ -128,6 +128,7 @@ template <typename T> void DoublyLinkedList<T>::push_back(const T &value) {
 
   // we have at least 1 element
   tail->next = node;
+  node->previous = tail;
   tail = node;
 }
 
