@@ -210,6 +210,12 @@ template <typename T> bool DoublyLinkedList<T>::empty() const noexcept {
   return !head;
 }
 
+template <typename T> void DoublyLinkedList<T>::clear() {
+  while (!empty()) {
+    pop_back();
+  }
+}
+
 template <typename T> class DoublyLinkedListIterator {};
 
 template <typename T>
