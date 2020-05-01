@@ -79,6 +79,18 @@ public:
   DoublyLinkedListIterator<T> erase(DoublyLinkedListIterator<T> pos);
 
   /**
+   * Returns a reference to the first element in the container.
+   */
+  T &front();
+  const T &front() const;
+
+  /**
+   * Returns a reference to the last element in the container.
+   */
+  T &back();
+  const T &back() const;
+
+  /**
    * Returns number of elements in the list
    * O(1) time complexity
    *
@@ -111,6 +123,18 @@ template <typename T> DoublyLinkedList<T>::~DoublyLinkedList() {
     delete head;
     head = nextHead;
   }
+}
+
+template <typename T> T &DoublyLinkedList<T>::front() { return head->data; }
+
+template <typename T> const T &DoublyLinkedList<T>::front() const {
+  return head->data;
+}
+
+template <typename T> T &DoublyLinkedList<T>::back() { return tail->data; }
+
+template <typename T> const T &DoublyLinkedList<T>::back() const {
+  return tail->data;
 }
 
 template <typename T> size_t DoublyLinkedList<T>::size() const noexcept {
