@@ -53,6 +53,7 @@ TEST_CASE("Dynamic array's element access functions work correctly") {
   double val = 1.0;
   for (int i = 0; i < 30; i++) {
     arr.push_back(val);
+    REQUIRE(arr.back() == val);
     val += 1;
   }
 

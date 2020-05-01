@@ -3,7 +3,7 @@
 
 #include "istack.h"
 #include <stdexcept>
-#include <vector>
+#include "../dynamic_array_template/dynamic_array.h"
 
 template <typename T> class StackDynamicArrayImpl final : public IStack<T> {
 public:
@@ -15,7 +15,7 @@ public:
   virtual bool empty() const override;
 
 private:
-  std::vector<T> m_dynArr;
+  DynamicArray<T> m_dynArr;
 };
 
 template <typename T> void StackDynamicArrayImpl<T>::push(const T &newElem) {

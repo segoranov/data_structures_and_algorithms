@@ -36,6 +36,12 @@ public:
   const T &operator[](size_t index) const;
 
   /**
+   * Returns a reference to the last element in the vector.
+   */
+  T &back();
+  const T &back() const;
+
+  /**
    * Returns number of elements in the array
    */
   size_t size() const;
@@ -212,6 +218,12 @@ template <typename T> T &DynamicArray<T>::operator[](size_t index) {
 
 template <typename T> const T &DynamicArray<T>::operator[](size_t index) const {
   return m_arr[index];
+}
+
+template <typename T> T &DynamicArray<T>::back() { return m_arr[size() - 1]; }
+
+template <typename T> const T &DynamicArray<T>::back() const {
+  return m_arr[size() - 1];
 }
 
 template <typename T> T *DynamicArray<T>::data() noexcept { return m_arr; }
