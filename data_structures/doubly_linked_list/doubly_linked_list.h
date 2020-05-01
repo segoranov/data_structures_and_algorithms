@@ -118,6 +118,38 @@ private:
   size_t currentSize = 0;
 };
 
+template <typename T> void DoublyLinkedList<T>::push_front(const T &value) {
+  Node<T> *node = new Node{value};
+  ++currentSize;
+
+  if (!head) {
+    head = tail = node;
+    return;
+  }
+
+  // we have at least 1 element
+  head->previous = node;
+  node->next = head;
+  head = node;
+}
+
+template <typename T> void DoublyLinkedList<T>::pop_front() {
+  if (empty()) {
+    throw std::runtime_error{"Calling pop_front() on an empty list."};
+  }
+
+  --currentSize;
+
+  if (currentSize == 0) { // there was only 1 element in the list
+    delete head;
+    head = tail = nullptr;
+  } else { // there were at least 2 elements in the list
+    head = head->next;
+    delete head->previous;
+    head->previous = nullptr;
+  }
+}
+
 template <typename T> void DoublyLinkedList<T>::push_back(const T &value) {
   Node<T> *node = new Node{value};
   ++currentSize;
