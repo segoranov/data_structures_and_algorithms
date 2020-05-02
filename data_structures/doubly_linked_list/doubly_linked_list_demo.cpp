@@ -1,9 +1,7 @@
 #include "doubly_linked_list.h"
 #include <iostream>
 
-// the reference is not const because const_iterator is
-// not yet implemented
-template <typename T> void print(DoublyLinkedList<T> &list) {
+template <typename T> void print(const DoublyLinkedList<T> &list) {
   for (const auto &elem : list) {
     std::cout << elem << ' ';
   }
@@ -23,7 +21,20 @@ int main() {
     sum += elem;
   }
 
-  std::cout << "Sum of elements: " << sum << std::endl;
+  std::cout << "Sum of elements: " << sum << '\n';
+
+  std::cout << "Increasing all elements with 1\n";
+
+  for (DoublyLinkedListIterator<int> it = list.begin(); it != list.end();
+       ++it) {
+    *it += 1;
+  }
+
+  for (auto constIt = list.cbegin(); constIt != list.cend(); constIt++) {
+    std::cout << *constIt << ' ';
+  }
+
+  std::cout << '\n';
 
   return 0;
 }
