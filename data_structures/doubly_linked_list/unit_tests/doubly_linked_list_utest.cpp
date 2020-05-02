@@ -100,18 +100,12 @@ TEST_CASE("Push a lot of elements test iterators") {
     REQUIRE(*it == i++);
   }
 
-  REQUIRE(it == list.end());
-  REQUIRE(i == 29'999);
-  REQUIRE(*it == i);
-
-  for (; it != list.begin(); --it) {
-    REQUIRE(*it == i--);
+  i = 0;
+  for(const auto& elem : list) {
+    REQUIRE(elem == i++);
   }
 
-  REQUIRE(it == list.begin());
-  REQUIRE(i == 0);
-  REQUIRE(*it == i);
-
+  it = list.begin();
   auto anotherIt = list.begin();
   REQUIRE(anotherIt == it);
 
@@ -141,12 +135,11 @@ TEST_CASE("Test inserting one element in the beginning") {
   list.push_front(1);
 
   auto it = list.begin();
-  auto insertedIt = list.insert(it, 2);
+  auto insertedIt = list.insertBefore(it, 2);
 
   REQUIRE(*it == 1);
   REQUIRE(*insertedIt == 2);
 
-  REQUIRE(it == list.end());
   REQUIRE(insertedIt == list.begin());
 }
 
@@ -165,7 +158,7 @@ TEST_CASE("Test inserting many elements") {
   ++it; // it points to 4
 
   for (int i = 3; i <= 99; i += 2) {
-    list.insert(it, i);
+    list.insertBefore(it, i);
     ++it;
   }
 
@@ -189,19 +182,6 @@ TEST_CASE("Erase at beginning") {
   REQUIRE(*it == 7);
 }
 
-TEST_CASE("Erase at end") {
-  DoublyLinkedList<int> list;
-  list.push_back(5);
-  list.push_back(6);
-  list.push_back(7);
-  list.erase(list.end());
-
-  auto it = list.end();
-  REQUIRE(*it == 6);
-  --it;
-  REQUIRE(*it == 5);
-}
-
 TEST_CASE("Erase at middle") {
   DoublyLinkedList<int> list;
   list.push_back(5);
@@ -210,7 +190,6 @@ TEST_CASE("Erase at middle") {
   auto it = list.begin();
   ++it; // points at 6
   auto afterErasedIt = list.erase(it);
-  REQUIRE(!it);
   REQUIRE(*afterErasedIt == 7);
   afterErasedIt--;
   REQUIRE(*afterErasedIt == 5);
@@ -244,7 +223,6 @@ TEST_CASE("Erase many numbers") {
   REQUIRE(list.size() == 51);
 }
 
-// TODO when const_iterator is implemented
 // TEST_CASE("Comparator of linked lists works correctly") {
 //   DoublyLinkedList<int> l1, l2;
 
