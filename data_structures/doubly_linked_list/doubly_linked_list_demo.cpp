@@ -2,15 +2,12 @@
 #include <iostream>
 
 // the reference is not const because const_iterator is
-// not implemented
+// not yet implemented
 template <typename T> void print(DoublyLinkedList<T> &list) {
-  DoublyLinkedListIterator<T> it = list.begin();
-  for (; it != list.end(); ++it) {
-    std::cout << *it << ' ';
+  for (const auto &elem : list) {
+    std::cout << elem << ' ';
   }
-
-  // it points to the last element now
-  std::cout << *it << std::endl;
+  std::cout << '\n';
 }
 
 int main() {
@@ -22,13 +19,9 @@ int main() {
   print(list);
 
   int sum = 0;
-  DoublyLinkedListIterator<int> it = list.begin();
-  for (; it != list.end(); ++it) {
-    sum += *it;
+  for (const auto &elem : list) {
+    sum += elem;
   }
-
-  // it points to the last element now
-  sum += *it;
 
   std::cout << "Sum of elements: " << sum << std::endl;
 
