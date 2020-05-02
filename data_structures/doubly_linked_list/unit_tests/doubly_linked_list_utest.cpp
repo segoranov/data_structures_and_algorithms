@@ -223,22 +223,22 @@ TEST_CASE("Erase many numbers") {
   REQUIRE(list.size() == 51);
 }
 
-// TEST_CASE("Comparator of linked lists works correctly") {
-//   DoublyLinkedList<int> l1, l2;
+TEST_CASE("Comparator of linked lists , copy ctor and operator= work correctly") {
+  DoublyLinkedList<int> l1, l2;
 
-//   for (int i = 0; i < 30'000; i++) {
-//     l1.push_back(i);
-//     l2.push_back(i);
-//   }
+  for (int i = 0; i < 30'000; i++) {
+    l1.push_back(i);
+    l2.push_back(i);
+  }
 
-//   REQUIRE(l1 == l2);
-//   l1.push_back(69);
-//   REQUIRE(l1 != l2);
+  REQUIRE(l1 == l2);
+  l1.push_back(69);
+  REQUIRE(l1 != l2);
 
-//   auto l3{l1};
-//   REQUIRE(l3 == l1);
+  auto l3{l1};
+  REQUIRE(l3 == l1);
 
-//   DoublyLinkedList<int> l4;
-//   l4 = l2;
-//   REQUIRE(l4 == l2);
-// }
+  DoublyLinkedList<int> l4;
+  l4 = l2;
+  REQUIRE(l4 == l2);
+}
