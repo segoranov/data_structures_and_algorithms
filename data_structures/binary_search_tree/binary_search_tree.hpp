@@ -2,6 +2,7 @@
 #define BINARY_SEARCH_TREE_H
 
 #include <cstddef>
+#include <fstream>
 #include <iostream>
 
 template <typename Comparable> class BinarySearchTree {
@@ -15,7 +16,8 @@ public:
   const Comparable &findMax() const;
   bool contains(const Comparable &x) const;
   bool isEmpty() const;
-  void printTree(std::ostream &out = std::cout) const;
+  void print(std::ostream &out = std::cout) const;
+  void printDot(std::string fileName = "bin_tree.dot") const;
   void makeEmpty();
 
   size_t size() const;
@@ -61,10 +63,43 @@ private:
   bool contains(const Comparable &x, BinaryNode *t) const;
   void makeEmpty(BinaryNode *&t);
   size_t size(BinaryNode *t) const;
-  void printTree(BinaryNode *t, std::ostream &out) const;
+  void print(BinaryNode *t, std::ostream &out) const;
+  void printDot(BinaryNode *t, std::ostream &out) const;
   BinaryNode *clone(BinaryNode *t) const;
 };
 
+template <typename Comparable>
+void BinarySearchTree<Comparable>::printDot(std::string fileName) const {
+  std::ofstream ofs{fileName};
+  ofs << "digraph BST {\n";
+
+  if (size() == 1) {
+    ofs << root->element << ";\n";
+  }
+
+  printDot(root, ofs);
+
+  ofs << "}";
+  ofs.close();
+}
+
+template <typename Comparable>
+void BinarySearchTree<Comparable>::printDot(BinaryNode *t,
+                                            std::ostream &out) const {
+  if (!t) {
+    return;
+  }
+
+  if (t->left) {
+    out << '\t' << t->element << " -> " << t->left->element << ";\n";
+    printDot(t->left, out);
+  }
+
+  if (t->right) {
+    out << '\t' << t->element << " -> " << t->right->element << ";\n";
+    printDot(t->right, out);
+  }
+}
 template <typename Comparable>
 size_t BinarySearchTree<Comparable>::size() const {
   return size(root);
