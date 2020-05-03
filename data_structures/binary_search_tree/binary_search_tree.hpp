@@ -69,6 +69,28 @@ private:
 };
 
 template <typename Comparable>
+BinarySearchTree<Comparable>::BinarySearchTree(const BinarySearchTree &other) {
+  root = clone(other.root);
+}
+
+template <typename Comparable>
+typename BinarySearchTree<Comparable>::BinaryNode *
+BinarySearchTree<Comparable>::clone(BinaryNode *t) const {
+  if (!t) {
+    return nullptr;
+  }
+
+  return new BinaryNode{t->element, clone(t->left), clone(t->right)};
+}
+
+template <typename Comparable>
+BinarySearchTree<Comparable>::BinarySearchTree(BinarySearchTree &&other) {
+  // 'steal'
+  this->root = other.root;
+  other.root = nullptr;
+}
+
+template <typename Comparable>
 void BinarySearchTree<Comparable>::printDot(std::string fileName) const {
   std::ofstream ofs{fileName};
   ofs << "digraph BST {\n";
