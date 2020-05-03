@@ -7,7 +7,7 @@ TEST_CASE(
   REQUIRE(bst.isEmpty());
 }
 
-TEST_CASE("Add two elements to BST and then make the tree empty") {
+TEST_CASE("Insert two elements to BST and then make the tree empty") {
   BinarySearchTree<int> bst;
   bst.insert(5);
   bst.insert(6);
@@ -20,4 +20,12 @@ TEST_CASE("Add two elements to BST and then make the tree empty") {
 
   bst.makeEmpty();
   REQUIRE(bst.isEmpty());
+}
+
+TEST_CASE("Insert many elements to BST and check size") {
+  BinarySearchTree<int> bst;
+  for (int i = 1; i <= 3'000; i++) {
+    bst.insert(i);
+    REQUIRE(bst.size() == i);
+  }
 }

@@ -18,6 +18,8 @@ public:
   void printTree(std::ostream &out = std::cout) const;
   void makeEmpty();
 
+  size_t size() const;
+
   /**
    * Insert x into the tree; duplicates are ignored.
    */
@@ -58,9 +60,24 @@ private:
 
   bool contains(const Comparable &x, BinaryNode *t) const;
   void makeEmpty(BinaryNode *&t);
+  size_t size(BinaryNode *t) const;
   void printTree(BinaryNode *t, std::ostream &out) const;
   BinaryNode *clone(BinaryNode *t) const;
 };
+
+template <typename Comparable>
+size_t BinarySearchTree<Comparable>::size() const {
+  return size(root);
+}
+
+template <typename Comparable>
+size_t BinarySearchTree<Comparable>::size(BinaryNode *t) const {
+  if (!t) {
+    return 0;
+  }
+
+  return 1 + size(t->left) + size(t->right);
+}
 
 template <typename Comparable>
 const Comparable &BinarySearchTree<Comparable>::findMin() const {
