@@ -100,6 +100,33 @@ void BinarySearchTree<Comparable>::printDot(BinaryNode *t,
     printDot(t->right, out);
   }
 }
+
+template <typename Comparable>
+void BinarySearchTree<Comparable>::remove(const Comparable &x) {
+  remove(x, root);
+}
+
+template <typename Comparable>
+void BinarySearchTree<Comparable>::remove(const Comparable &x, BinaryNode *&t) {
+  if (!t) {
+    return;
+  }
+
+  if (x < t->element) {
+    remove(x, t->left);
+  } else if (x > t->element) {
+    remove(x, t->right);
+  } else if (t->left && t->right) {          // has two children
+    t->element = findMin(t->right)->element; // keeps the BST property
+    remove(t->element, t->right); // smallest element cannot have a left child,
+                                  // hence this second removal is an easy one
+  } else {
+    BinaryNode *oldNode = t;
+    t = (t->left != nullptr) ? t->left : t->right;
+    delete oldNode;
+  }
+}
+
 template <typename Comparable>
 size_t BinarySearchTree<Comparable>::size() const {
   return size(root);
