@@ -220,7 +220,7 @@ void BinarySearchTree<Comparable>::insert(const Comparable &x, BinaryNode *&t) {
 
 template <typename Comparable>
 void BinarySearchTree<Comparable>::insert(Comparable &&x) {
-  insert(x, root);
+  insert(std::move(x), root);
 }
 
 template <typename Comparable>
