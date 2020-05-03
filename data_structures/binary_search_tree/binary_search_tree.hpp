@@ -1,5 +1,5 @@
-#ifndef ISTACK_H
-#define ISTACK_H
+#ifndef BINARY_SEARCH_TREE_H
+#define BINARY_SEARCH_TREE_H
 
 #include <cstddef>
 #include <iostream>
