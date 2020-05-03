@@ -46,4 +46,28 @@ private:
   BinaryNode *clone(BinaryNode *t) const;
 };
 
+template <typename Comparable>
+BinarySearchTree<Comparable>::~BinarySearchTree() {
+  makeEmpty();
+}
+
+template <typename Comparable> void BinarySearchTree<Comparable>::makeEmpty() {
+  makeEmpty(root);
+}
+
+template <typename Comparable>
+void BinarySearchTree<Comparable>::makeEmpty(BinaryNode *&t) {
+  if (t != nullptr) {
+    makeEmpty(t->left);
+    makeEmpty(t->right);
+    delete t;
+    t = nullptr;
+  }
+}
+
+template <typename Comparable>
+bool BinarySearchTree<Comparable>::isEmpty() const {
+  return root == nullptr;
+}
+
 #endif
