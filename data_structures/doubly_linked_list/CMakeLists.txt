@@ -5,3 +5,5 @@ project(doubly_linked_list_data_structure)
 add_executable(doubly_linked_list_demo doubly_linked_list_demo.cpp)
 
 set_property(TARGET doubly_linked_list_demo PROPERTY CXX_STANDARD 17)
+
+add_subdirectory( unit_tests )
