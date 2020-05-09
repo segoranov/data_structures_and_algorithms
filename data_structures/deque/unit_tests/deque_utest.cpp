@@ -32,68 +32,112 @@ TEST_CASE("Push back many elements in deque") {
   }
 }
 
-// TEST_CASE("Push back and push front two elements in deque") {
-//   Deque<double> deque;
-//   deque.push_back(0);
-//   deque.push_front(1);
+TEST_CASE("Push front one element in deque") {
+  Deque<double> deque;
+  deque.push_front(23);
+  REQUIRE(deque.back() == 23);
+  REQUIRE(deque.front() == 23);
+  REQUIRE(deque[0] == 23);
+}
 
-//   REQUIRE(deque[0] == 1);
-//   REQUIRE(deque[1] == 0);
-// }
+TEST_CASE("Push front many elements in deque") {
+  Deque<double> deque;
+  for (int i = 0; i < 20'000; i++) {
+    deque.push_front(i);
+    REQUIRE(deque.back() == 0);
+    REQUIRE(deque.front() == i);
+    REQUIRE(deque[0] == i);
+  }
 
-// TEST_CASE("Deque has correct size after adding many elements") {
-//   Deque<double> deque;
+  for (int desiredValue = 19'999, index = 0; desiredValue >= 0;
+       desiredValue--, index++) {
+    REQUIRE(deque[index] == desiredValue);
+  }
+}
 
-//   for (int i = 0; i < 20'000; i++) {
-//     deque.push_back(i);
-//     deque.push_front(-i);
-//   }
+TEST_CASE("Push back and push front two elements in deque") {
+  Deque<double> deque;
+  deque.push_back(0);
+  deque.push_front(1);
 
-//   REQUIRE(!deque.empty());
-//   REQUIRE(deque.size() == 40'000);
-// }
+  REQUIRE(deque[0] == 1);
+  REQUIRE(deque[1] == 0);
+}
 
-// TEST_CASE("Deque's front and back element access functions work correctly")
-// {
-//   Deque<double> deque;
+TEST_CASE("Push back and push front four elements in deque") {
+  Deque<double> deque;
+  deque.push_back(3);
+  deque.push_back(4);
+  deque.push_front(2);
+  deque.push_front(1);
 
-//   double val_back = 1.0;
-//   double val_front = -1.0;
-//   for (int i = 0; i < 30; i++) {
-//     deque.push_back(val_back);
-//     deque.push_front(val_front);
-//     REQUIRE(deque.back() == val_back);
-//     REQUIRE(deque.front() == val_front);
-//     ++val_back;
-//     --val_front;
-//   }
+  // deque should be {1, 2, 3, 4} now
+  REQUIRE(deque[0] == 1);
+  REQUIRE(deque[1] == 2);
+  REQUIRE(deque[2] == 3);
+  REQUIRE(deque[3] == 4);
+}
 
-//   REQUIRE(deque.size() == 60);
+TEST_CASE("Push back and push front many elements in deque") {
+  Deque<double> deque;
+  for (int i = 1; i <= 20'000; i++) {
+    deque.push_front(i);
+    deque.push_back(-i);
+    REQUIRE(deque.back() == -i);
+    REQUIRE(deque.front() == i);
+  }
 
-//   double val = -30;
-//   for (int i = 0; i < deque.size(); i++) {
-//     if (val == 0) {
-//       ++val;
-//     }
-//     REQUIRE(deque[i] == val);
-//     REQUIRE(deque.at(i) == val);
-//     ++val;
-//   }
-// }
+  REQUIRE(deque.size() == 40'000);
 
-// TEST_CASE("Deque's element access function at() throws exception when "
-//           "index is out of bounds") {
-//   Deque<double> deque;
-//   for (int i = 0; i < 155; i++) {
-//     deque.push_back(69.0);
-//   }
+  long sum = 0;
+  for (int i = 0; i < deque.size(); i++) {
+    sum += deque[i];
+  }
 
-//   for (int i = 0; i < 155; i++) {
-//     REQUIRE_NOTHROW(deque.at(i));
-//   }
+  REQUIRE(sum == 0);
+}
 
-//   REQUIRE_THROWS_AS(deque.at(155), std::out_of_range);
-// }
+TEST_CASE("Deque's front and back element access functions work correctly")
+{
+  Deque<double> deque;
+
+  double val_back = 1.0;
+  double val_front = -1.0;
+  for (int i = 0; i < 30; i++) {
+    deque.push_back(val_back);
+    deque.push_front(val_front);
+    REQUIRE(deque.back() == val_back);
+    REQUIRE(deque.front() == val_front);
+    ++val_back;
+    --val_front;
+  }
+
+  REQUIRE(deque.size() == 60);
+
+  double val = -30;
+  for (int i = 0; i < deque.size(); i++) {
+    if (val == 0) {
+      ++val;
+    }
+    REQUIRE(deque[i] == val);
+    REQUIRE(deque.at(i) == val);
+    ++val;
+  }
+}
+
+TEST_CASE("Deque's element access function at() throws exception when "
+          "index is out of bounds") {
+  Deque<double> deque;
+  for (int i = 0; i < 155; i++) {
+    deque.push_back(69.0);
+  }
+
+  for (int i = 0; i < 155; i++) {
+    REQUIRE_NOTHROW(deque.at(i));
+  }
+
+  REQUIRE_THROWS_AS(deque.at(155), std::out_of_range);
+}
 
 // TEST_CASE("Deque's clear() works properly") {
 //   Deque<double> deque;

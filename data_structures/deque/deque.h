@@ -87,6 +87,9 @@ public:
 private:
   void resize(size_t newCapacity);
 
+  // Helper function used to add the element when !m_arr is true
+  void addElementWhenEmpty(const T &value);
+
 private:
   T *m_arr = nullptr;
   size_t m_currentSize = 0;
@@ -116,10 +119,7 @@ template <typename T> Deque<T> &Deque<T>::operator=(const Deque &other) {}
 
 template <typename T> void Deque<T>::push_back(const T &value) {
   if (!m_arr) { // 0 elements
-    m_arr = new T[1];
-    m_arr[0] = value;
-    m_startIndex = m_frontIndex = m_backIndex = 0;
-    m_currentCapacity = m_currentSize = 1;
+    addElementWhenEmpty(value);
     return;
   }
 
@@ -129,6 +129,29 @@ template <typename T> void Deque<T>::push_back(const T &value) {
   }
 
   m_arr[++m_backIndex] = value;
+  ++m_currentSize;
+}
+
+template <typename T> void Deque<T>::push_front(const T &value) {
+  if (!m_arr) { // 0 elements
+    addElementWhenEmpty(value);
+    return;
+  }
+
+  while (m_frontIndex == 0) {
+    // No space for push_front. Resizing should be done.
+    resize(m_currentCapacity * 2);
+  }
+
+  m_arr[--m_frontIndex] = value;
+  ++m_currentSize;
+}
+
+template <typename T> void Deque<T>::addElementWhenEmpty(const T &value) {
+  m_arr = new T[1];
+  m_arr[0] = value;
+  m_startIndex = m_frontIndex = m_backIndex = 0;
+  m_currentCapacity = m_currentSize = 1;
 }
 
 template <typename T> void Deque<T>::pop_back() {}
@@ -162,7 +185,9 @@ template <typename T> size_t Deque<T>::size() const { return m_currentSize; }
 
 // template <typename T> size_t Deque<T>::capacity() const {}
 
-template <typename T> bool Deque<T>::empty() const {}
+template <typename T> bool Deque<T>::empty() const {
+  return m_currentSize == 0;
+}
 
 template <typename T> void Deque<T>::clear() {}
 
