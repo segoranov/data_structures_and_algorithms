@@ -17,28 +17,28 @@ template <typename T> void print(const Deque<T> &deque) {
 }
 
 int main() {
-  Deque<double> deque;
+  // Deque<double> deque;
 
-  for (int i = 1; i <= 10; i++) {
-    deque.push_back(static_cast<double>(i));
-  }
+  // for (int i = 1; i <= 10; i++) {
+  //   deque.push_back(static_cast<double>(i));
+  // }
 
-  double sum = 0;
-  for (int i = 0; i < deque.size(); i++) {
-    sum += deque[i];
-  }
+  // double sum = 0;
+  // for (int i = 0; i < deque.size(); i++) {
+  //   sum += deque[i];
+  // }
 
-  print(deque);
-  std::cout << "Sum of deque elements is: " << sum << '\n';
+  // print(deque);
+  // std::cout << "Sum of deque elements is: " << sum << '\n';
 
-  for (int i = 1; i <= 10; i++) {
-    print(deque);
-    deque.pop_back();
-  }
+  // for (int i = 1; i <= 10; i++) {
+  //   print(deque);
+  //   deque.pop_back();
+  // }
 
-  print(deque);
-  deque.clear();
-  print(deque);
+  // print(deque);
+  // deque.clear();
+  // print(deque);
 
   return 0;
 }
