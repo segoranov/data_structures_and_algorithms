@@ -208,18 +208,115 @@ TEST_CASE("Deque's copy constructor and operator equals work properly") {
   REQUIRE(deque_equals == deque);
 }
 
-// TEST_CASE("Pop back works correctly") {
-//   Deque<double> deque;
-//   for (int i = 0; i < 155; i++) {
-//     deque.push_back(69.0);
-//   }
+TEST_CASE("Pop back once") {
+  Deque<double> deque;
+  deque.push_back(1);
+  deque.push_back(2);
+  deque.pop_back();
+  REQUIRE(deque.back() == 1);
+  REQUIRE(deque.size() == 1);
+}
 
-//   REQUIRE(deque.size() == 155);
+TEST_CASE("Pop back till empty") {
+  Deque<double> deque;
+  deque.push_back(1);
+  deque.push_back(2);
+  deque.pop_back();
+  deque.pop_back();
+  REQUIRE(deque.empty());
+}
 
-//   for (int i = 155; i > 0; i--) {
-//     REQUIRE(deque.size() == i);
-//     deque.pop_back();
-//   }
+TEST_CASE("Pop front once") {
+  Deque<double> deque;
+  deque.push_back(1);
+  deque.push_back(2);
+  deque.pop_front();
+  REQUIRE(deque.back() == 2);
+  REQUIRE(deque.size() == 1);
+}
 
-//   REQUIRE(deque.empty());
-// }
+TEST_CASE("Pop front till empty") {
+  Deque<double> deque;
+  deque.push_back(1);
+  deque.push_back(2);
+  deque.pop_front();
+  deque.pop_front();
+  REQUIRE(deque.empty());
+}
+
+TEST_CASE("Pop back many times") {
+  Deque<double> deque;
+  for (int i = 0; i < 155; i++) {
+    deque.push_back(i);
+  }
+
+  REQUIRE(deque.size() == 155);
+
+  for (int i = 155; i > 0; i--) {
+    REQUIRE(deque.size() == i);
+    deque.pop_back();
+    if (!deque.empty()) {
+      REQUIRE(deque.back() == i - 2);
+      REQUIRE(deque.front() == 0);
+    }
+  }
+
+  REQUIRE(deque.empty());
+}
+
+TEST_CASE("Pop front many times") {
+  Deque<double> deque;
+  for (int i = 0; i < 155; i++) {
+    deque.push_back(i);
+  }
+
+  REQUIRE(deque.size() == 155);
+
+  for (int i = 155, j = 1; i > 0; i--, j++) {
+    REQUIRE(deque.size() == i);
+    deque.pop_front();
+    if (!deque.empty()) {
+      REQUIRE(deque.front() == j);
+      REQUIRE(deque.back() == 154);
+    }
+  }
+
+  REQUIRE(deque.empty());
+}
+
+TEST_CASE("Pop front and pop back once") {
+  Deque<double> deque;
+  for (int i = 1; i <= 155; i++) {
+    deque.push_back(i);
+  }
+
+  deque.pop_front();
+  deque.pop_back();
+
+  REQUIRE(deque.size() == 153);
+  REQUIRE(deque.front() == 2);
+  REQUIRE(deque.back() == 154);
+}
+
+TEST_CASE("Pop front and pop back many times") {
+  Deque<double> deque;
+  for (int i = 1; i <= 155; i++) {
+    deque.push_back(i);
+  }
+
+  // deque is [1 2 3 ... 155]
+
+  double expectedFront = 1, expectedBack = 155;
+  while (!deque.empty()) {
+    REQUIRE(deque.front() == expectedFront);
+    REQUIRE(deque.back() == expectedBack);
+    deque.pop_back();
+
+    if (!deque.empty()) {
+      deque.pop_front();
+    }
+
+    --expectedBack;
+    ++expectedFront;
+  }
+}

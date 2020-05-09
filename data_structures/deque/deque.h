@@ -182,7 +182,25 @@ template <typename T> void Deque<T>::addElementWhenEmpty(const T &value) {
   m_currentCapacity = m_currentSize = 1;
 }
 
-template <typename T> void Deque<T>::pop_back() {}
+template <typename T> void Deque<T>::pop_back() {
+  if (size() == 1) {
+    clear(true);
+    return;
+  }
+
+  --m_backIndex;
+  --m_currentSize;
+}
+
+template <typename T> void Deque<T>::pop_front() {
+  if (size() == 1) {
+    clear(true);
+    return;
+  }
+
+  --m_currentSize;
+  ++m_frontIndex;
+}
 
 template <typename T> void Deque<T>::resize(size_t newCapacity) {
   assert(newCapacity > m_currentCapacity);
