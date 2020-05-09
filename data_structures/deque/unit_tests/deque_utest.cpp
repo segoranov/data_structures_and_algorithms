@@ -25,12 +25,11 @@ TEST_CASE("Push back many elements in deque") {
   Deque<double> deque;
   for (int i = 0; i < 20'000; i++) {
     deque.push_back(i);
+    REQUIRE(deque.back() == i);
+    REQUIRE(deque[i] == i);
+    REQUIRE(deque.front() == 0);
+    REQUIRE(deque[0] == 0);
   }
-
-  REQUIRE(deque.back() == 19'999);
-  REQUIRE(deque.front() == 0);
-  REQUIRE(deque[0] == 0);
-  REQUIRE(deque[19'999] == 19'999);
 }
 
 // TEST_CASE("Push back and push front two elements in deque") {

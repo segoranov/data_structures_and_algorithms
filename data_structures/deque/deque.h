@@ -119,6 +119,7 @@ template <typename T> void Deque<T>::push_back(const T &value) {
     m_arr = new T[1];
     m_arr[0] = value;
     m_startIndex = m_frontIndex = m_backIndex = 0;
+    m_currentCapacity = m_currentSize = 1;
     return;
   }
 
@@ -135,11 +136,12 @@ template <typename T> void Deque<T>::pop_back() {}
 template <typename T> void Deque<T>::resize(size_t newCapacity) {
   assert(newCapacity > m_currentCapacity);
   T *newBuff = new T[newCapacity];
+  m_currentCapacity = newCapacity;
 
   const size_t frontIndexDistanceToStart = m_startIndex - m_frontIndex;
   const size_t backIndexDistanceToStart = m_backIndex - m_startIndex;
 
-  const size_t newStartIndex = newCapacity / 2;
+  const size_t newStartIndex = (newCapacity - 1) / 2;
   const size_t newFrontIndex = newStartIndex - frontIndexDistanceToStart;
   const size_t newBackIndex = newStartIndex + backIndexDistanceToStart;
 
@@ -152,6 +154,8 @@ template <typename T> void Deque<T>::resize(size_t newCapacity) {
   m_startIndex = newStartIndex;
   m_frontIndex = newFrontIndex;
   m_backIndex = newBackIndex;
+  delete[] m_arr;
+  m_arr = newBuff;
 }
 
 template <typename T> size_t Deque<T>::size() const { return m_currentSize; }
