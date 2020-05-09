@@ -97,8 +97,7 @@ TEST_CASE("Push back and push front many elements in deque") {
   REQUIRE(sum == 0);
 }
 
-TEST_CASE("Deque's front and back element access functions work correctly")
-{
+TEST_CASE("Deque's front and back element access functions work correctly") {
   Deque<double> deque;
 
   double val_back = 1.0;
@@ -139,49 +138,60 @@ TEST_CASE("Deque's element access function at() throws exception when "
   REQUIRE_THROWS_AS(deque.at(155), std::out_of_range);
 }
 
-// TEST_CASE("Deque's clear() works properly") {
-//   Deque<double> deque;
-//   for (int i = 0; i < 150; i++) {
-//     deque.push_front(i);
-//     deque.push_back(69.0);
-//   }
+TEST_CASE("Deque's clear() works properly") {
+  Deque<double> deque;
+  for (int i = 0; i < 150; i++) {
+    deque.push_front(i);
+    deque.push_back(69.0);
+  }
 
-//   REQUIRE(deque.size() == 300);
+  REQUIRE(deque.size() == 300);
 
-//   deque.clear();
+  deque.clear();
 
-//   // deque should be empty; size should be 0;
-//   REQUIRE(deque.empty());
-//   REQUIRE(deque.size() == 0);
+  // deque should be empty; size should be 0;
+  REQUIRE(deque.empty());
+  REQUIRE(deque.size() == 0);
 
-//   // should not be able to access any element
-//   for (int i = -300; i < 300; i++) {
-//     REQUIRE_THROWS_AS(deque.at(i), std::out_of_range);
-//   }
-// }
+  // should not be able to access any element
+  for (int i = -300; i < 300; i++) {
+    REQUIRE_THROWS_AS(deque.at(i), std::out_of_range);
+  }
 
-// TEST_CASE("Comparators of deques work correctly") {
-//   Deque<double> deque;
-//   for (int i = 0; i < 155; i++) {
-//     deque.push_front(169.0);
-//     deque.push_back(69.0);
-//   }
+  // add elements again to check if it's ok.
+  for (int i = 0; i < 150; i++) {
+    deque.push_front(i);
+    deque.push_back(69.0);
+  }
 
-//   Deque<double> deque1;
-//   for (int i = 0; i < 155; i++) {
-//     deque.push_front(169.0);
-//     deque1.push_back(69.0);
-//   }
+  REQUIRE(deque.size() == 300);
+  for (int i = 0; i < 150; i++) {
+    REQUIRE_NOTHROW(deque[i]++);
+  }
+}
 
-//   REQUIRE(deque1 == deque);
+TEST_CASE("Comparators of deques work correctly") {
+  Deque<double> deque;
+  for (int i = 0; i < 155; i++) {
+    deque.push_front(169.0);
+    deque.push_back(69.0);
+  }
 
-//   Deque<double> deque2;
-//   for (int i = 0; i < 155; i++) {
-//     deque.push_back(static_cast<double>(i));
-//   }
+  Deque<double> deque1;
+  for (int i = 0; i < 155; i++) {
+    deque1.push_front(169.0);
+    deque1.push_back(69.0);
+  }
 
-//   REQUIRE(deque2 != deque);
-// }
+  REQUIRE(deque1 == deque);
+
+  Deque<double> deque2;
+  for (int i = 0; i < 155; i++) {
+    deque.push_back(static_cast<double>(i));
+  }
+
+  REQUIRE(deque2 != deque);
+}
 
 // TEST_CASE("Deque's copy constructor and operator equals work properly") {
 //   Deque<double> deque;

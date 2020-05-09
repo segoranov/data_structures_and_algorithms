@@ -81,8 +81,11 @@ public:
   /**
    * Erases all elements from the container. After this call, size() returns
    * zero.
+   *
+   * @param bDeleteInternalBuffer If true, the internal buffer will have 0
+   * capacity. The memory will be returned to the OS.
    */
-  void clear();
+  void clear(bool bDeleteInternalBuffer = false);
 
 private:
   void resize(size_t newCapacity);
@@ -189,7 +192,16 @@ template <typename T> bool Deque<T>::empty() const {
   return m_currentSize == 0;
 }
 
-template <typename T> void Deque<T>::clear() {}
+template <typename T> void Deque<T>::clear(bool bDeleteInternalBuffer) {
+  if (bDeleteInternalBuffer) {
+    delete[] m_arr;
+    m_arr = nullptr;
+    m_currentSize = m_currentCapacity = 0;
+  } else {
+    m_currentSize = 0;
+    m_frontIndex = m_backIndex = m_startIndex;
+  }
+}
 
 template <typename T> T &Deque<T>::at(size_t index) {
   if (index < 0 || index >= m_currentSize) {
