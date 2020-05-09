@@ -1,6 +1,8 @@
 #ifndef DEQUE_H_20200509
 #define DEQUE_H_20200509
 
+#include <stddef.h>
+
 template <typename T> class Deque {
 public:
   Deque() = default;
@@ -96,7 +98,9 @@ template <typename T> void Deque<T>::push_back(const T &value) {}
 
 template <typename T> void Deque<T>::pop_back() {}
 
-template <typename T> size_t Deque<T>::size() const {}
+template <typename T> size_t Deque<T>::size() const {
+  return m_currentSize;
+}
 
 // template <typename T> size_t Deque<T>::capacity() const {}
 
@@ -117,9 +121,23 @@ template <typename T> const T &Deque<T>::back() const {}
 template <typename T> Deque<T>::~Deque() { delete[] m_arr; }
 
 template <typename T>
-bool operator==(const Deque<T> &lhs, const Deque<T> &rhs) {}
+bool operator==(const Deque<T> &lhs, const Deque<T> &rhs) {
+  if (lhs.size() != rhs.size()) {
+    return false;
+  }
+
+  for (int i = 0; i < lhs.size(); i++) {
+    if (lhs[i] != rhs[i]) {
+      return false;
+    }
+  }
+
+  return true;
+}
 
 template <typename T>
-bool operator!=(const Deque<T> &lhs, const Deque<T> &rhs) {}
+bool operator!=(const Deque<T> &lhs, const Deque<T> &rhs) {
+  return !(lhs == rhs);
+}
 
 #endif
