@@ -93,6 +93,8 @@ private:
   // Helper function used to add the element when !m_arr is true
   void addElementWhenEmpty(const T &value);
 
+  void copy(const Deque &other);
+
 private:
   T *m_arr = nullptr;
   size_t m_currentSize = 0;
@@ -116,9 +118,32 @@ template <typename T> Deque<T>::Deque(size_t initialSize) {
   m_currentCapacity = initialSize;
 }
 
-template <typename T> Deque<T>::Deque(const Deque &other) {}
+template <typename T> Deque<T>::Deque(const Deque &other) : m_arr{nullptr} {
+  copy(other);
+}
 
-template <typename T> Deque<T> &Deque<T>::operator=(const Deque &other) {}
+template <typename T> Deque<T> &Deque<T>::operator=(const Deque &other) {
+  if (this != &other) {
+    copy(other);
+  }
+
+  return *this;
+}
+
+template <typename T> void Deque<T>::copy(const Deque &other) {
+  T *newArr = new T[other.m_currentCapacity];
+  m_startIndex = other.m_startIndex;
+  m_frontIndex = other.m_frontIndex;
+  m_backIndex = other.m_backIndex;
+  for (int i = other.m_frontIndex; i <= other.m_backIndex; i++) {
+    newArr[i] = other.m_arr[i];
+  }
+
+  delete[] m_arr;
+  m_arr = newArr;
+  m_currentSize = other.m_currentSize;
+  m_currentCapacity = other.m_currentCapacity;
+}
 
 template <typename T> void Deque<T>::push_back(const T &value) {
   if (!m_arr) { // 0 elements

@@ -193,20 +193,20 @@ TEST_CASE("Comparators of deques work correctly") {
   REQUIRE(deque2 != deque);
 }
 
-// TEST_CASE("Deque's copy constructor and operator equals work properly") {
-//   Deque<double> deque;
-//   for (int i = 0; i < 155; i++) {
-//     deque.push_front(169.0);
-//     deque.push_back(69.0);
-//   }
+TEST_CASE("Deque's copy constructor and operator equals work properly") {
+  Deque<double> deque;
+  for (int i = 0; i < 10; i++) {
+    deque.push_back(i);
+  }
 
-//   Deque<double> deque_copy{deque};
-//   REQUIRE(deque_copy == deque);
+  Deque<double> deque_copy{deque};
+  REQUIRE(deque_copy == deque);
 
-//   Deque<double> deque_equals;
-//   deque_equals = deque;
-//   REQUIRE(deque_equals == deque);
-// }
+  Deque<double> deque_equals;
+  deque_equals = deque;
+
+  REQUIRE(deque_equals == deque);
+}
 
 // TEST_CASE("Pop back works correctly") {
 //   Deque<double> deque;
