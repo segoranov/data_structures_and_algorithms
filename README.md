@@ -1,5 +1,7 @@
 ## Implementation of various data structures and algorithms
 
+### [Catch2](https://github.com/catchorg/Catch2) is used for unit testing the different data structures.
+
 ### Data structures
 - [Dynamic array - non template](https://github.com/stiliangoranov/data_structures_and_algorithms/tree/master/data_structures/dynamic_array_non_template)
 - [Dynamic array - template](https://github.com/stiliangoranov/data_structures_and_algorithms/tree/master/data_structures/dynamic_array_template)
