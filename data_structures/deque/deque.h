@@ -1,12 +1,14 @@
 #ifndef DEQUE_H_20200509
 #define DEQUE_H_20200509
 
-#include <cassert>
 #include <stddef.h>
+
+#include <cassert>
 #include <stdexcept>
 
-template <typename T> class Deque {
-public:
+template <typename T>
+class Deque {
+ public:
   Deque() = default;
   Deque(size_t initialSize);
   Deque(const Deque &);
@@ -87,7 +89,7 @@ public:
    */
   void clear(bool bDeleteInternalBuffer = false);
 
-private:
+ private:
   void resize(size_t newCapacity);
 
   // Helper function used to add the element when !m_arr is true
@@ -95,7 +97,7 @@ private:
 
   void copy(const Deque &other);
 
-private:
+ private:
   T *m_arr = nullptr;
   size_t m_currentSize = 0;
   size_t m_currentCapacity = 0;
@@ -104,7 +106,8 @@ private:
   size_t m_backIndex;
 };
 
-template <typename T> Deque<T>::Deque(size_t initialSize) {
+template <typename T>
+Deque<T>::Deque(size_t initialSize) {
   m_arr = new T[initialSize];
   m_startIndex = initialSize / 2;
   // initialize all values with zero
@@ -118,11 +121,13 @@ template <typename T> Deque<T>::Deque(size_t initialSize) {
   m_currentCapacity = initialSize;
 }
 
-template <typename T> Deque<T>::Deque(const Deque &other) : m_arr{nullptr} {
+template <typename T>
+Deque<T>::Deque(const Deque &other) : m_arr{nullptr} {
   copy(other);
 }
 
-template <typename T> Deque<T> &Deque<T>::operator=(const Deque &other) {
+template <typename T>
+Deque<T> &Deque<T>::operator=(const Deque &other) {
   if (this != &other) {
     copy(other);
   }
@@ -130,7 +135,8 @@ template <typename T> Deque<T> &Deque<T>::operator=(const Deque &other) {
   return *this;
 }
 
-template <typename T> void Deque<T>::copy(const Deque &other) {
+template <typename T>
+void Deque<T>::copy(const Deque &other) {
   T *newArr = new T[other.m_currentCapacity];
   m_startIndex = other.m_startIndex;
   m_frontIndex = other.m_frontIndex;
@@ -145,8 +151,9 @@ template <typename T> void Deque<T>::copy(const Deque &other) {
   m_currentCapacity = other.m_currentCapacity;
 }
 
-template <typename T> void Deque<T>::push_back(const T &value) {
-  if (!m_arr) { // 0 elements
+template <typename T>
+void Deque<T>::push_back(const T &value) {
+  if (!m_arr) {  // 0 elements
     addElementWhenEmpty(value);
     return;
   }
@@ -160,8 +167,9 @@ template <typename T> void Deque<T>::push_back(const T &value) {
   ++m_currentSize;
 }
 
-template <typename T> void Deque<T>::push_front(const T &value) {
-  if (!m_arr) { // 0 elements
+template <typename T>
+void Deque<T>::push_front(const T &value) {
+  if (!m_arr) {  // 0 elements
     addElementWhenEmpty(value);
     return;
   }
@@ -175,14 +183,16 @@ template <typename T> void Deque<T>::push_front(const T &value) {
   ++m_currentSize;
 }
 
-template <typename T> void Deque<T>::addElementWhenEmpty(const T &value) {
+template <typename T>
+void Deque<T>::addElementWhenEmpty(const T &value) {
   m_arr = new T[1];
   m_arr[0] = value;
   m_startIndex = m_frontIndex = m_backIndex = 0;
   m_currentCapacity = m_currentSize = 1;
 }
 
-template <typename T> void Deque<T>::pop_back() {
+template <typename T>
+void Deque<T>::pop_back() {
   if (size() == 1) {
     clear(true);
     return;
@@ -192,7 +202,8 @@ template <typename T> void Deque<T>::pop_back() {
   --m_currentSize;
 }
 
-template <typename T> void Deque<T>::pop_front() {
+template <typename T>
+void Deque<T>::pop_front() {
   if (size() == 1) {
     clear(true);
     return;
@@ -202,7 +213,8 @@ template <typename T> void Deque<T>::pop_front() {
   ++m_frontIndex;
 }
 
-template <typename T> void Deque<T>::resize(size_t newCapacity) {
+template <typename T>
+void Deque<T>::resize(size_t newCapacity) {
   assert(newCapacity > m_currentCapacity);
   T *newBuff = new T[newCapacity];
   m_currentCapacity = newCapacity;
@@ -227,15 +239,20 @@ template <typename T> void Deque<T>::resize(size_t newCapacity) {
   m_arr = newBuff;
 }
 
-template <typename T> size_t Deque<T>::size() const { return m_currentSize; }
+template <typename T>
+size_t Deque<T>::size() const {
+  return m_currentSize;
+}
 
 // template <typename T> size_t Deque<T>::capacity() const {}
 
-template <typename T> bool Deque<T>::empty() const {
+template <typename T>
+bool Deque<T>::empty() const {
   return m_currentSize == 0;
 }
 
-template <typename T> void Deque<T>::clear(bool bDeleteInternalBuffer) {
+template <typename T>
+void Deque<T>::clear(bool bDeleteInternalBuffer) {
   if (bDeleteInternalBuffer) {
     delete[] m_arr;
     m_arr = nullptr;
@@ -246,7 +263,8 @@ template <typename T> void Deque<T>::clear(bool bDeleteInternalBuffer) {
   }
 }
 
-template <typename T> T &Deque<T>::at(size_t index) {
+template <typename T>
+T &Deque<T>::at(size_t index) {
   if (index < 0 || index >= m_currentSize) {
     throw std::out_of_range{"Index out of range."};
   }
@@ -254,27 +272,40 @@ template <typename T> T &Deque<T>::at(size_t index) {
   return m_arr[m_frontIndex + index];
 }
 
-template <typename T> T &Deque<T>::operator[](size_t index) {
+template <typename T>
+T &Deque<T>::operator[](size_t index) {
   return m_arr[m_frontIndex + index];
 }
 
-template <typename T> const T &Deque<T>::operator[](size_t index) const {
+template <typename T>
+const T &Deque<T>::operator[](size_t index) const {
   return m_arr[m_frontIndex + index];
 }
 
-template <typename T> T &Deque<T>::back() { return m_arr[m_backIndex]; }
-
-template <typename T> const T &Deque<T>::back() const {
+template <typename T>
+T &Deque<T>::back() {
   return m_arr[m_backIndex];
 }
 
-template <typename T> T &Deque<T>::front() { return m_arr[m_frontIndex]; }
+template <typename T>
+const T &Deque<T>::back() const {
+  return m_arr[m_backIndex];
+}
 
-template <typename T> const T &Deque<T>::front() const {
+template <typename T>
+T &Deque<T>::front() {
   return m_arr[m_frontIndex];
 }
 
-template <typename T> Deque<T>::~Deque() { delete[] m_arr; }
+template <typename T>
+const T &Deque<T>::front() const {
+  return m_arr[m_frontIndex];
+}
+
+template <typename T>
+Deque<T>::~Deque() {
+  delete[] m_arr;
+}
 
 template <typename T>
 bool operator==(const Deque<T> &lhs, const Deque<T> &rhs) {

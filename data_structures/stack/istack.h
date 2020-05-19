@@ -3,8 +3,9 @@
 
 #include <cstddef>
 
-template <typename T> class IStack {
-public:
+template <typename T>
+class IStack {
+ public:
   virtual void push(const T &newElem) = 0;
   virtual void pop() = 0;
   virtual T &top() = 0;

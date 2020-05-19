@@ -4,7 +4,7 @@
 #include <cstddef>
 
 class DynamicArray {
-public:
+ public:
   DynamicArray() = default;
   DynamicArray(size_t initialSize);
   DynamicArray(const DynamicArray &);
@@ -70,7 +70,7 @@ public:
    */
   double *data() noexcept;
 
-private:
+ private:
   double *m_arr = nullptr;
   size_t m_currentSize = 0;
   size_t m_currentCapacity = 0;

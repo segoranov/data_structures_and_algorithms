@@ -3,8 +3,9 @@
 
 #include <stdexcept>
 
-template <typename T> class DynamicArray {
-public:
+template <typename T>
+class DynamicArray {
+ public:
   DynamicArray() = default;
   DynamicArray(size_t initialSize);
   DynamicArray(const DynamicArray &);
@@ -76,13 +77,14 @@ public:
    */
   T *data() noexcept;
 
-private:
+ private:
   T *m_arr = nullptr;
   size_t m_currentSize = 0;
   size_t m_currentCapacity = 0;
 };
 
-template <typename T> DynamicArray<T>::DynamicArray(size_t initialSize) {
+template <typename T>
+DynamicArray<T>::DynamicArray(size_t initialSize) {
   m_arr = new T[initialSize];
 
   // initialize all values with zero
@@ -94,7 +96,8 @@ template <typename T> DynamicArray<T>::DynamicArray(size_t initialSize) {
   m_currentCapacity = initialSize;
 }
 
-template <typename T> DynamicArray<T>::DynamicArray(const DynamicArray &other) {
+template <typename T>
+DynamicArray<T>::DynamicArray(const DynamicArray &other) {
   m_arr = new T[other.m_currentCapacity];
   for (int i = 0; i < other.m_currentSize; i++) {
     m_arr[i] = other.m_arr[i];
@@ -121,7 +124,8 @@ DynamicArray<T> &DynamicArray<T>::operator=(const DynamicArray &other) {
   return *this;
 }
 
-template <typename T> void DynamicArray<T>::push_back(const T &value) {
+template <typename T>
+void DynamicArray<T>::push_back(const T &value) {
   // 1st case: Buffer has no capacity yet
   if (m_currentCapacity == 0) {
     m_arr = new T[1];
@@ -157,7 +161,8 @@ template <typename T> void DynamicArray<T>::push_back(const T &value) {
   m_currentCapacity = newCapacity;
 }
 
-template <typename T> void DynamicArray<T>::pop_back() {
+template <typename T>
+void DynamicArray<T>::pop_back() {
   if (empty()) {
     throw std::runtime_error("Calling pop_back() on an empty container.");
   }
@@ -165,15 +170,18 @@ template <typename T> void DynamicArray<T>::pop_back() {
   --m_currentSize;
 }
 
-template <typename T> size_t DynamicArray<T>::size() const {
+template <typename T>
+size_t DynamicArray<T>::size() const {
   return m_currentSize;
 }
 
-template <typename T> size_t DynamicArray<T>::capacity() const {
+template <typename T>
+size_t DynamicArray<T>::capacity() const {
   return m_currentCapacity;
 }
 
-template <typename T> void DynamicArray<T>::shrink_to_fit() {
+template <typename T>
+void DynamicArray<T>::shrink_to_fit() {
   if (m_currentSize == m_currentCapacity) {
     return;
   }
@@ -198,13 +206,18 @@ template <typename T> void DynamicArray<T>::shrink_to_fit() {
   m_arr = newArr;
 }
 
-template <typename T> bool DynamicArray<T>::empty() const {
+template <typename T>
+bool DynamicArray<T>::empty() const {
   return m_currentSize == 0;
 }
 
-template <typename T> void DynamicArray<T>::clear() { m_currentSize = 0; }
+template <typename T>
+void DynamicArray<T>::clear() {
+  m_currentSize = 0;
+}
 
-template <typename T> T &DynamicArray<T>::at(size_t index) {
+template <typename T>
+T &DynamicArray<T>::at(size_t index) {
   if (index < 0 || index >= m_currentSize) {
     throw std::out_of_range{"Index out of range."};
   }
@@ -212,23 +225,35 @@ template <typename T> T &DynamicArray<T>::at(size_t index) {
   return m_arr[index];
 }
 
-template <typename T> T &DynamicArray<T>::operator[](size_t index) {
+template <typename T>
+T &DynamicArray<T>::operator[](size_t index) {
   return m_arr[index];
 }
 
-template <typename T> const T &DynamicArray<T>::operator[](size_t index) const {
+template <typename T>
+const T &DynamicArray<T>::operator[](size_t index) const {
   return m_arr[index];
 }
 
-template <typename T> T &DynamicArray<T>::back() { return m_arr[size() - 1]; }
-
-template <typename T> const T &DynamicArray<T>::back() const {
+template <typename T>
+T &DynamicArray<T>::back() {
   return m_arr[size() - 1];
 }
 
-template <typename T> T *DynamicArray<T>::data() noexcept { return m_arr; }
+template <typename T>
+const T &DynamicArray<T>::back() const {
+  return m_arr[size() - 1];
+}
 
-template <typename T> DynamicArray<T>::~DynamicArray() { delete[] m_arr; }
+template <typename T>
+T *DynamicArray<T>::data() noexcept {
+  return m_arr;
+}
+
+template <typename T>
+DynamicArray<T>::~DynamicArray() {
+  delete[] m_arr;
+}
 
 template <typename T>
 bool operator==(const DynamicArray<T> &lhs, const DynamicArray<T> &rhs) {
