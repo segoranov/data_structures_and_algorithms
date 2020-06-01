@@ -3,6 +3,7 @@
 
 #include <algorithm>
 #include <iostream>
+#include <set>
 #include <stdexcept>
 #include <unordered_map>
 #include <utility>
@@ -76,8 +77,8 @@ class GraphAdjList {
   /**
    * Returns all the vertices in the graph
    */
-  std::unordered_set<V> vertices() const {
-    std::unordered_set<V> result;
+  std::set<V> vertices() const {
+    std::set<V> result;
     for (const auto& [vertex, _] : adjList) {
       result.insert(vertex);
     }
@@ -107,12 +108,12 @@ class GraphAdjList {
    *
    * @throw std::logic_error if the vertex is not in the graph
    */
-  std::unordered_set<V> neighbors(const V& vertex) const {
+  std::set<V> neighbors(const V& vertex) const {
     if (!contains(vertex)) {
       throw std::logic_error{"Vertex not in the graph."};
     }
 
-    std::unordered_set<V> result;
+    std::set<V> result;
     const auto& adjacents = adjList.find(vertex)->second;
     for (const auto& adj : adjacents) {
       result.insert(adj);

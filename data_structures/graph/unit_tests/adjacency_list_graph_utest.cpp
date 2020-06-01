@@ -17,7 +17,7 @@ TEST_CASE("Graph adds vertices and edges properly") {
   SECTION("Add and remove 1 vertex to graph") {
     graph.addVertex(1);
     REQUIRE_FALSE(graph.isEmpty());
-    REQUIRE(graph.vertices() == std::unordered_set<int>{1});
+    REQUIRE(graph.vertices() == std::set<int>{1});
     REQUIRE(graph.contains(1));
     REQUIRE(graph.neighbors(1).empty());
     REQUIRE(graph.verticesCount() == 1);
@@ -30,10 +30,10 @@ TEST_CASE("Graph adds vertices and edges properly") {
   SECTION("Add and remove 1 edge to graph") {
     graph.addEdge(1, 2);
     REQUIRE_FALSE(graph.isEmpty());
-    REQUIRE(graph.vertices() == std::unordered_set<int>{1, 2});
+    REQUIRE(graph.vertices() == std::set<int>{1, 2});
     REQUIRE(graph.contains(1));
     REQUIRE(graph.contains(2));
-    REQUIRE(graph.neighbors(1) == std::unordered_set<int>{2});
+    REQUIRE(graph.neighbors(1) == std::set<int>{2});
     REQUIRE(graph.neighbors(2).empty());
     REQUIRE(graph.verticesCount() == 2);
     REQUIRE(graph.hasEdge(1, 2));
