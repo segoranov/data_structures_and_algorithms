@@ -10,6 +10,7 @@ add_subdirectory(data_structures/dynamic_array_non_template)
 add_subdirectory(data_structures/dynamic_array_template)
 add_subdirectory(data_structures/stack)
 add_subdirectory(data_structures/deque)
+add_subdirectory(data_structures/graph)
 
 add_test(NAME doubly_linked_list_tests COMMAND run_doubly_linked_list_tests)
 add_test(NAME binary_search_tree_tests COMMAND run_bst_tests)
@@ -17,3 +18,4 @@ add_test(NAME dyn_array_non_template_tests COMMAND run_dyn_array_non_template_te
 add_test(NAME dyn_array_tests COMMAND run_dyn_array_tests)
 add_test(NAME stack_tests COMMAND run_stack_tests)
 add_test(NAME deque_tests COMMAND run_deque_tests)
+add_test(NAME graph_tests COMMAND run_graph_tests)
