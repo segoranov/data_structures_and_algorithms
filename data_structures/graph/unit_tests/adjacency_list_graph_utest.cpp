@@ -119,19 +119,3 @@ TEST_CASE("Graph adds vertices and edges properly") {
     checkGraphEmptiness();
   }
 }
-
-GraphAdjList<int> generateTestGraph() {
-  GraphAdjList<int> graph;
-  graph.addEdge(1, 2);
-  graph.addEdge(1, 3);
-
-  graph.addEdge(2, 4);
-  graph.addEdge(2, 5);
-
-  graph.addEdge(3, 6);
-  graph.addEdge(3, 7);
-
-  graph.addEdge(4, 8);
-
-  return graph;
-}
