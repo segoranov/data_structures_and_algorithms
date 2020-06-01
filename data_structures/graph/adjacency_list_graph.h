@@ -8,9 +8,6 @@
 #include <utility>
 #include <vector>
 
-template <typename V>
-using Edge = std::pair<V, V>;
-
 /// The class represents directed graph without weights using adjacency list
 /// representation
 template <typename V>
@@ -44,23 +41,45 @@ class GraphAdjList {
     }
   }
 
-  /**
-   * Adds an edge to the graph if it is not there
-   */
-  void addEdge(const Edge<V>& edge) {}
+  void addEdge(const V& from, const V& to) {
+    if (!contains(from)) {  // 'from' is in the graph
+      adjList.insert({from, std::vector{to}});
+      if (!contains(to)) {
+        adjList.insert({to, {}});
+      }
+    } else {  // 'from' is not in the graph
+      // check to see if there is already such an edge
+      std::vector<V>& fromAdjacents = adjList.find(from)->second;
+      for (const auto& adj : fromAdjacents) {
+        if (adj == to) return;
+      }
+
+      fromAdjacents.push_back(to);
+    }
+  }
 
   /**
    * Removes an edge from the graph if it is there
    */
-  void removeEdge(const Edge<V>& edge) {}
+  void removeEdge(const V& from, const V& to) {
+    if (!contains(from) || !contains(to)) {
+      return;
+    }
+
+    auto& fromAdjacents = adjList.find(from)->second;
+    fromAdjacents.erase(
+        std::remove_if(fromAdjacents.begin(), fromAdjacents.end(),
+                       [&](const V& v) { return v == to; }),
+        fromAdjacents.end());
+  }
 
   /**
    * Returns all the vertices in the graph
    */
-  std::vector<V> vertices() const {
-    std::vector<V> result;
+  std::unordered_set<V> vertices() const {
+    std::unordered_set<V> result;
     for (const auto& [vertex, _] : adjList) {
-      result.push_back(vertex);
+      result.insert(vertex);
     }
 
     return result;
@@ -70,6 +89,18 @@ class GraphAdjList {
    * Returns the number of vertices in the graph
    */
   std::size_t verticesCount() const { return adjList.size(); }
+
+  /**
+   * Returns the number of edges in the graph
+   */
+  std::size_t edgesCount() const {
+    std::size_t result = 0;
+    for (const auto& [_, adjacents] : adjList) {
+      result += adjacents.size();
+    }
+
+    return result;
+  }
 
   /**
    * Returns all vertices y such that there is an edge from the vertex to y
@@ -85,23 +116,18 @@ class GraphAdjList {
   }
 
   /**
-   * Returns whether there is an edge between v1 and v2
+   * Returns whether there is an edge from 'from' to 'to'
    *
-   * @throw std::logic_error if either v1 or v2 are not in the graph
+   * @throw std::logic_error if either 'from' or 'to' are not in the graph
    */
-  bool adjacent(const V& v1, const V& v2) const {
-    if (!contains(v1) || !contains(v2)) {
+  bool hasEdge(const V& from, const V& to) const {
+    if (!contains(from) || !contains(to)) {
       throw std::logic_error{"Vertex not in the graph."};
     }
 
-    const auto v1_adjacents = adjList.find(v1)->second;
-    for (const auto& adj : v1_adjacents) {
-      if (adj == v2) return true;
-    }
-
-    const auto v2_adjacents = adjList.find(v2)->second;
-    for (const auto& adj : v2) {
-      if (adj == v1) return true;
+    const auto& fromAdjacents = adjList.find(from)->second;
+    for (const auto& adj : fromAdjacents) {
+      if (adj == to) return true;
     }
 
     return false;
