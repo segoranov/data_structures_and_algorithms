@@ -6,7 +6,7 @@ set(CMAKE_BUILD_TYPE DEBUG)
 
 add_executable(run_doubly_linked_list_tests main_utest.cpp doubly_linked_list_utest.cpp)
 
-set_property(TARGET run_doubly_linked_list_tests PROPERTY CXX_STANDARD 17)
+set_property(TARGET run_doubly_linked_list_tests PROPERTY CXX_STANDARD 20)
 
 target_include_directories( run_doubly_linked_list_tests PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/..

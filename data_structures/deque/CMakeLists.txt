@@ -4,6 +4,6 @@ project(deque_data_structure)
 
 add_executable(deque_demo deque_demo.cpp)
 
-set_property(TARGET deque_demo PROPERTY CXX_STANDARD 17)
+set_property(TARGET deque_demo PROPERTY CXX_STANDARD 20)
 
 add_subdirectory(unit_tests)

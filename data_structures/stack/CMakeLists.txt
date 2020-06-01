@@ -4,6 +4,6 @@ project(dynamic_array_data_structure)
 
 add_executable(stack_demo stack_demo.cpp)
 
-set_property(TARGET stack_demo PROPERTY CXX_STANDARD 17)
+set_property(TARGET stack_demo PROPERTY CXX_STANDARD 20)
 
 add_subdirectory(unit_tests)
