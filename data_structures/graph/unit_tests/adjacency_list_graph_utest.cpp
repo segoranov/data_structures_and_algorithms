@@ -11,6 +11,7 @@ TEST_CASE("Graph adds vertices and edges properly") {
     REQUIRE(!graph.contains(1));
     REQUIRE_THROWS_AS(graph.neighbors(1).empty(), std::logic_error);
     REQUIRE(graph.verticesCount() == 0);
+    REQUIRE(graph.edgesCount() == 0);
   };
 
   SECTION("Add and remove 1 vertex to graph") {
