@@ -2,9 +2,9 @@
 #define ADJACENCY_LIST_GRAPH_H_20200601
 
 #include <algorithm>
+#include <iostream>
 #include <stdexcept>
 #include <unordered_map>
-#include <unordered_set>
 #include <utility>
 #include <vector>
 
@@ -148,6 +148,19 @@ class GraphAdjList {
    * Makes the graph empty - removes all vertices and edges
    */
   void clear() { adjList.clear(); }
+
+  /**
+   * Prints the graph in DOT format
+   */
+  void printDOT(std::ostream& os = std::cout) {
+    os << "digraph g {\n";
+    for (V const& v : vertices()) {
+      os << v << ";\n";
+      for (auto const& neighbor : neighbors(v))
+        os << v << " -> " << neighbor << ";\n";
+    }
+    os << "}\n";
+  }
 
  private:
   std::unordered_map<V, std::vector<V>> adjList;
