@@ -107,12 +107,18 @@ class GraphAdjList {
    *
    * @throw std::logic_error if the vertex is not in the graph
    */
-  std::vector<V> neighbors(const V& vertex) const {
+  std::unordered_set<V> neighbors(const V& vertex) const {
     if (!contains(vertex)) {
       throw std::logic_error{"Vertex not in the graph."};
     }
 
-    return adjList.find(vertex)->second;
+    std::unordered_set<V> result;
+    const auto& adjacents = adjList.find(vertex)->second;
+    for (const auto& adj : adjacents) {
+      result.insert(adj);
+    }
+
+    return result;
   }
 
   /**
@@ -137,6 +143,11 @@ class GraphAdjList {
    * Returns whether or not the graph contains the vertex
    */
   bool contains(const V& vertex) const { return adjList.contains(vertex); }
+
+  /**
+   * Makes the graph empty - removes all vertices and edges
+   */
+  void clear() { adjList.clear(); }
 
  private:
   std::unordered_map<V, std::vector<V>> adjList;
