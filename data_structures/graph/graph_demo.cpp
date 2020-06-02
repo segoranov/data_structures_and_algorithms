@@ -40,14 +40,14 @@ void BFS_demo() {
 
   {
     std::cout << "Starting BFS from 1 to 8.\n";
-    auto path = BFS_shortest_path(graph, 1, 8);
+    auto path = GraphAlgorithms::BFS_shortest_path(graph, 1, 8);
     std::cout << "BFS finished. Shortest path from 1 to 8: ";
     printPathIfPresent(path);
   }
 
   {
     std::cout << "Starting BFS from 1 to 9.\n";
-    auto path = BFS_shortest_path(graph, 1, 9);
+    auto path = GraphAlgorithms::BFS_shortest_path(graph, 1, 9);
     std::cout << "BFS finished. Shortest path from 1 to 9: ";
     printPathIfPresent(path);
   }
