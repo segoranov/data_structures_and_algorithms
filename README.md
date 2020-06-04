@@ -13,6 +13,11 @@
 
 ### Algorithms
 - [Sorting algorithms](https://github.com/stiliangoranov/data_structures_and_algorithms/tree/master/sorting_algorithms)
+    - [Heap sort](https://github.com/segoranov/data_structures_and_algorithms/blob/master/sorting_algorithms/heap_sort.cpp)
+    - [Insertion sort](https://github.com/segoranov/data_structures_and_algorithms/blob/master/sorting_algorithms/insertion_sort.cpp)
+    - [Merge sort](https://github.com/segoranov/data_structures_and_algorithms/blob/master/sorting_algorithms/merge_sort.cpp)
+    - [Quick sort](https://github.com/segoranov/data_structures_and_algorithms/blob/master/sorting_algorithms/quick_sort.cpp)
+    - [Selection sort](https://github.com/segoranov/data_structures_and_algorithms/blob/master/sorting_algorithms/selection_sort.cpp)
 
 
 ### Other
