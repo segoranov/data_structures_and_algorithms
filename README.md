@@ -19,6 +19,8 @@
     - [Quick sort](https://github.com/segoranov/data_structures_and_algorithms/blob/master/sorting_algorithms/quick_sort.cpp)
     - [Selection sort](https://github.com/segoranov/data_structures_and_algorithms/blob/master/sorting_algorithms/selection_sort.cpp)
 
+### Dynamic programming
+[Longest increasing subsequence](https://github.com/segoranov/data_structures_and_algorithms/blob/master/dynamic_programming/longest_increasing_subsequence.cpp)
 
 ### Other
 - [Demonstration of the concept 'locality of reference'](https://github.com/stiliangoranov/data_structures_and_algorithms/blob/master/locality_of_reference.cpp) - [Wikipedia Link](https://en.wikipedia.org/wiki/Locality_of_reference)
